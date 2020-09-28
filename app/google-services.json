@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "913354962772",
+    "firebase_url": "https://realmakeup-76f36.firebaseio.com",
+    "project_id": "realmakeup-76f36",
+    "storage_bucket": "realmakeup-76f36.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913354962772:android:e9e224fe08a60d61c47ac1",
+        "android_client_info": {
+          "package_name": "com.example.realmakeup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913354962772-jb76uk7m0r2jsrhmmh13v9od2o0i4j0b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.realmakeup",
+            "certificate_hash": "33e37a01a32a1578c2a501f5ddbe7010fe914d1e"
+          }
+        },
+        {
+          "client_id": "913354962772-d41o8osdhlch0v0l0mvcgqvev2266gi0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEogQna_RgEKhTIpnII-UWzh01ZOr7Xc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913354962772-d41o8osdhlch0v0l0mvcgqvev2266gi0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
