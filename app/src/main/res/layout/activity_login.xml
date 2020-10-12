@@ -8,8 +8,6 @@
     android:layout_gravity="center_vertical"
     android:background="#ffffff"
     tools:context=".LoginActivity">
-
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"

@@ -9,18 +9,20 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_tools"
+            android:id="@+id/nav_palette"
             android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_tools" />
+            android:title="@string/menu_palette" />
+        <item
+            android:id="@+id/nav_item"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/menu_item" />
     </group>
-
     <item android:title="Communicate">
         <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_share" />
+                android:title="일단 비워둠" />
         </menu>
     </item>
-
 </menu>

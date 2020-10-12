@@ -8,6 +8,16 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
+    <string name="menu_palette">My Palette</string>
+    <string name="menu_item">Item List</string>
+
+    <string-array name="spinner_brand">
+        <item>에뛰드하우스</item>
+        <item>MAC</item>
+    </string-array>
+    <string-array name="spinner_product">
+        <item>eye Shadows</item>
+        <item>Libs</item>
+    </string-array>
+
 </resources>
