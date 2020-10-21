@@ -18,8 +18,8 @@ import com.example.realmakeup.ItemListActivity;
 import com.example.realmakeup.MainActivity;
 import com.example.realmakeup.MyPaletteActivity;
 import com.example.realmakeup.R;
-import com.example.realmakeup.ui.ItemList.ItemListFragment;
-import com.example.realmakeup.ui.MyPalette.MyPaletteFragment;
+//import com.example.realmakeup.ui.ItemList.ItemListFragment;
+//import com.example.realmakeup.ui.MyPalette.MyPaletteFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
