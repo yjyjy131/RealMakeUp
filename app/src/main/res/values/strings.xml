@@ -12,12 +12,12 @@
     <string name="menu_item">Item List</string>
 
     <string-array name="spinner_brand">
-        <item>에뛰드하우스</item>
-        <item>MAC</item>
+        <item>etude</item>
+        <item>mac</item>
     </string-array>
     <string-array name="spinner_product">
-        <item>eye Shadows</item>
-        <item>Libs</item>
+        <item>shadows</item>
+        <item>libs</item>
     </string-array>
 
 </resources>
