@@ -10,30 +10,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
+
 import com.example.realmakeup.R;
+import com.example.realmakeup.ui.MyPalette.MyPaletteViewModel;
 
 public class SkinSettingFragment extends Fragment {
 
-    private SkinSettingViewModel SkinSettingViewModel;
-
-    // 각각의 Fragment마다 Instance를 반환해 줄 메소드를 생성
-    public static SkinSettingFragment newInstance() {
-        return new SkinSettingFragment();
-    }
+    private SkinSettingViewModel skinSettingViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SkinSettingViewModel =
+        skinSettingViewModel =
                 ViewModelProviders.of(this).get(SkinSettingViewModel.class);
         View root = inflater.inflate(R.layout.fragment_skin_setting, container, false);
         final TextView textView = root.findViewById(R.id.text_tools);
-        SkinSettingViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        skinSettingViewModel.getText().observe(this, new Observer<String>() {
         return root;
     }
 }

@@ -1,16 +1,16 @@
-package com.example.realmakeup.ui.SkinSetting;
+package com.example.realmakeup.ui.MyPalette;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SkinSettingViewModel extends ViewModel {
+public class MyPaletteViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SkinSettingViewModel() {
+    public MyPaletteViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is skin setting fragment");
+        mText.setValue("This is my Paletee fragment");
     }
 
     public LiveData<String> getText() {
