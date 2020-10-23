@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "913354962772-skjbsai2658knl08gonahd2ljihjal05.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.realmakeup",
-            "certificate_hash": "67f4095cacabf24e846bcff50c97faaedabfe607"
-          }
-        },
-        {
           "client_id": "913354962772-jb76uk7m0r2jsrhmmh13v9od2o0i4j0b.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
