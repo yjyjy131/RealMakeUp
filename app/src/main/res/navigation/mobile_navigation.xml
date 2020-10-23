@@ -11,17 +11,22 @@
         android:label="RealMakeUp"
         tools:layout="@layout/fragment_home" />
 
+    <fragment
+        android:id="@+id/nav_item"
+        android:name="com.example.realmakeup.ui.ItemList.ItemListFragment"
+        android:label="제품 조회"
+        tools:layout="@layout/fragment_item_list" />
 
     <fragment
         android:id="@+id/nav_palette"
         android:name="com.example.realmakeup.ui.MyPalette.MyPaletteFragment"
-        android:label="설정"
+        android:label="나의 팔레트"
         tools:layout="@layout/fragment_my_palette" />
 
     <fragment
-        android:id="@+id/nav_item"
-        android:name="com.example.realmakeup.ui.ItemList.ItemListFragment"
-        android:label="공유"
-        tools:layout="@layout/fragment_item_list" />
+        android:id="@+id/nav_skin"
+        android:name="com.example.realmakeup.ui.SkinSetting.SkinSettingFragment"
+        android:label="피부색 설정"
+        tools:layout="@layout/fragment_skin_setting" />
 
 </navigation>

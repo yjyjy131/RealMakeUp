@@ -1,5 +1,6 @@
 package com.example.realmakeup.ui.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,10 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
-import com.example.realmakeup.ItemListActivity;
-import com.example.realmakeup.MainActivity;
-import com.example.realmakeup.MyPaletteActivity;
 import com.example.realmakeup.R;
 import com.example.realmakeup.ui.ItemList.ItemListFragment;
 import com.example.realmakeup.ui.MyPalette.MyPaletteFragment;
@@ -49,16 +49,14 @@ public class HomeFragment extends Fragment {
         list_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ItemListActivity.class);
-                startActivity(intent);
+                //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
             }
         });
 
         palette_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MyPaletteActivity.class);
-                startActivity(intent);
+
             }
         });
 

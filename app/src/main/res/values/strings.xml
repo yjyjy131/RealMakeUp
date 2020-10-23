@@ -7,9 +7,10 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_palette">My Palette</string>
-    <string name="menu_item">Item List</string>
+    <string name="menu_home">홈 화면</string>
+    <string name="menu_palette">나의 팔레트</string>
+    <string name="menu_item">제품 조회</string>
+    <string name="menu_skin">피부색 설정</string>
 
     <string-array name="spinner_brand">
         <item>etude</item>

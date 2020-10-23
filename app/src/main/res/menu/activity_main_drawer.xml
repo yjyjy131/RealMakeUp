@@ -8,21 +8,23 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_palette"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_palette" />
+
         <item
             android:id="@+id/nav_item"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_item" />
+
+        <item
+            android:id="@+id/nav_palette"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/menu_palette" />
     </group>
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_skin"
                 android:icon="@drawable/ic_menu_share"
-                android:title="일단 비워둠" />
+                android:title="피부색 설정" />
         </menu>
     </item>
 </menu>
