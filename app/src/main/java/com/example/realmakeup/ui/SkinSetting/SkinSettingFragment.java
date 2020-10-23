@@ -27,11 +27,6 @@ public class SkinSettingFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_skin_setting, container, false);
         final TextView textView = root.findViewById(R.id.text_tools);
         skinSettingViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 }
