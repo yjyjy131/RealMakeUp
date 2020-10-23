@@ -24,9 +24,9 @@
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="일단 비워둠" />
+                android:id="@+id/nav_skin"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="피부색 추출" />
         </menu>
     </item>
 </menu>
