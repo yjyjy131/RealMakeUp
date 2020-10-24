@@ -39,7 +39,6 @@ public class ItemListFragment extends Fragment {
     private ItemListViewModel itemListViewModel;
 
     GridView gridView;
-    String brand, item;
     // Spinner
     Spinner brand_cate, item_cate;
     ArrayAdapter<CharSequence> adapter_brand, adapter_item;
@@ -64,11 +63,12 @@ public class ItemListFragment extends Fragment {
         adapter_item = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_product, android.R.layout.simple_spinner_dropdown_item);
         brand_cate.setAdapter(adapter_brand);
         item_cate.setAdapter(adapter_item);
-        //adapter_item.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter_brand.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter_item.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         brand_cate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                brand = adapter_item.getItem(i).toString();
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -78,7 +78,6 @@ public class ItemListFragment extends Fragment {
         item_cate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                item = adapter_item.getItem(i).toString();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -89,7 +88,9 @@ public class ItemListFragment extends Fragment {
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                get_product_info();
+                String brand = brand_cate.getSelectedItem().toString();
+                String item = item_cate.getSelectedItem().toString();
+                get_product_info(brand, item);
             }
         });
 
@@ -104,11 +105,11 @@ public class ItemListFragment extends Fragment {
         return root;
     }
 
-    void get_product_info(){
+    void get_product_info(String brand, String item){
         singerAdapter = new product_Adapter();
         gridView.setAdapter(singerAdapter);
 
-        datebaseReference.child("etude").child("shadows").addListenerForSingleValueEvent(new ValueEventListener() {
+        datebaseReference.child(brand).child(item).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
