@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
 import android.util.Log;
@@ -46,22 +45,31 @@ public class skindetection extends AppCompatActivity
 
 
 
-    ConstraintLayout skinlayout;
+    LinearLayout skinlayout;
+    LinearLayout liplayout;
     LinearLayout animationlayout;
+
     ImageView filteringimage;
     ImageView skinimage;
-    TextView Hex;
+    ImageView lipimage;
+
+    TextView SkinHex;
+    TextView LipHex;
     TextView loading;
+
     Bitmap filtering_bitmap;
+
     Mat filter_image;
+    Mat temp_image;
     Mat right_cheek = new Mat();
     Mat left_cheek = new Mat();
+    Mat top_lip = new Mat();
+    Mat bottom_lip = new Mat();
 
 
-    double[] avg_right = new double[3];
-    double[] avg_left = new double[3];
-    double[] result = new double[3];
-    boolean end = false;
+    double[] skinresult = new double[3];
+    double[] lipresult = new double[3];
+
     private void copyFile(String filename) {
         String baseDir = Environment.getExternalStorageDirectory().getPath();
         String pathDir = baseDir + File.separator + filename;
@@ -100,7 +108,11 @@ public class skindetection extends AppCompatActivity
 
         filteringimage = (ImageView)findViewById(R.id.filteringimage);
         skinimage = (ImageView)findViewById(R.id.skinimage);
-        skinlayout = (ConstraintLayout)findViewById(R.id.Constraint);
+        lipimage = (ImageView)findViewById(R.id.lipimage);
+
+        skinlayout = (LinearLayout)findViewById(R.id.skin);
+        liplayout = (LinearLayout)findViewById(R.id.lip);
+
         animationlayout = (LinearLayout)findViewById(R.id.animation);
         loading = (TextView)findViewById(R.id.loading);
 
@@ -109,7 +121,7 @@ public class skindetection extends AppCompatActivity
         byte[] byteArray = getIntent().getByteArrayExtra("image");
         filtering_bitmap = BitmapFactory.decodeByteArray(byteArray,0,byteArray.length);
         filter_image = Imgcodecs.imdecode(new MatOfByte(byteArray), Imgcodecs.IMREAD_UNCHANGED);
-
+        temp_image = filter_image;
         // filtering된 이미지 가져와서 imageview에 넣기
         filteringimage.setImageBitmap(filtering_bitmap);
 
@@ -117,8 +129,8 @@ public class skindetection extends AppCompatActivity
         final LottieAnimationView lottie = (LottieAnimationView) findViewById(R.id.animationView);
 
 
-
-        Hex= (TextView)findViewById(R.id.hexacode);
+        SkinHex = (TextView)findViewById(R.id.skinHex);
+        LipHex = (TextView)findViewById(R.id.lipHex);
         final ProgressDialog mDialog = new ProgressDialog(this);
 
 
@@ -129,39 +141,69 @@ public class skindetection extends AppCompatActivity
             public void onClick(View v) {
                 loading.setVisibility(View.INVISIBLE);
                 skincolor_extraction();
-                Hex.setText(String.format("#%02X%02X%02X",(int)result[2],(int)result[1],(int)result[0]));
+                SkinHex.setText(String.format("#%02X%02X%02X",(int)skinresult[2],(int)skinresult[1],(int)skinresult[0]));
+                LipHex.setText(String.format("#%02X%02X%02X",(int)lipresult[2],(int)lipresult[1],(int)lipresult[0]));
+
                 Bitmap bitmapOutput;
                 bitmapOutput = Bitmap.createBitmap(filter_image.cols(), filter_image.rows(), Bitmap.Config.ARGB_8888);
                 Utils.matToBitmap(filter_image, bitmapOutput);
                 skinimage.setImageBitmap(bitmapOutput);
                 skinlayout.setVisibility(View.VISIBLE);
+
+                //lip이미지에 넣기
+                bitmapOutput = Bitmap.createBitmap(temp_image.cols(), temp_image.rows(), Bitmap.Config.ARGB_8888);
+                Utils.matToBitmap(temp_image, bitmapOutput);
+                lipimage.setImageBitmap(bitmapOutput);
+                liplayout.setVisibility(View.VISIBLE);
                 //register_user_info();
             }
         });
     }
 
 
-    public native void Detect(long faceimage,long right,long left);
+    public native void Detect(long faceimage,long right,long left,String name);
     public native double[] avgBGR(long cheek);
     public native void createskin(long output, double result[]);
 
     public void skincolor_extraction(){
+        double[] avg_right = new double[3];
+        double[] avg_left = new double[3];
+        double[] avg_top = new double[3];
+        double[] avg_bottom = new double[3];
 
-        Detect(filter_image.getNativeObjAddr() ,right_cheek.getNativeObjAddr(),left_cheek.getNativeObjAddr());
 
+
+        Detect(filter_image.getNativeObjAddr() ,right_cheek.getNativeObjAddr(),left_cheek.getNativeObjAddr(),"skin");
+        Detect(temp_image.getNativeObjAddr(),top_lip.getNativeObjAddr(),bottom_lip.getNativeObjAddr(),"lip");
 
         //각 볼의 평균 lab값 구하기
         avg_right = avgBGR(right_cheek.getNativeObjAddr());
         avg_left = avgBGR(left_cheek.getNativeObjAddr());
         //두 볼의 평균 lab값 구하기
-        result[0] = (avg_left[0] + avg_right[0]) / 2; //B
-        result[1] = (avg_left[1] + avg_right[1]) / 2; //G
-        result[2] = (avg_left[2] + avg_right[2]) / 2; //R
-        Log.d("native-lib ::: result ","" + result[2]+ " "+result[1]+ " " +result[0]);
+        skinresult[0] = (avg_left[0] + avg_right[0]) / 2; //B
+        skinresult[1] = (avg_left[1] + avg_right[1]) / 2; //G
+        skinresult[2] = (avg_left[2] + avg_right[2]) / 2; //R
+        Log.d("native-lib ::: skinresult ","" + skinresult[2]+ " "+skinresult[1]+ " " +skinresult[0]);
 
-        //평균 lab값을 이용해 이미지 채우기
-        createskin(filter_image.getNativeObjAddr(),result);
+        //평균 RGB값을 이용해 이미지 채우기
+        createskin(filter_image.getNativeObjAddr(),skinresult);
+
+
+
+
+        //각 볼의 평균 lab값 구하기
+        avg_top = avgBGR(top_lip.getNativeObjAddr());
+        avg_bottom = avgBGR(bottom_lip.getNativeObjAddr());
+        //두 볼의 평균 lab값 구하기
+        lipresult[0] = (avg_top[0] + avg_bottom[0]) / 2; //B
+        lipresult[1] = (avg_top[1] + avg_bottom[1]) / 2; //G
+        lipresult[2] = (avg_top[2] + avg_bottom[2]) / 2; //R
+        Log.d("native-lib ::: lipresult ","" + lipresult[2]+ " "+lipresult[1]+ " " +lipresult[0]);
+
+        createskin(temp_image.getNativeObjAddr(),lipresult);
+
     }
+
 
     public void register_user_info(String skinRGB, String lipRGB){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
