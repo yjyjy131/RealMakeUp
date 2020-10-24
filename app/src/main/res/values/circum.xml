@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="환경">
+        <item>밝은 실내</item>
+        <item>어두운 실내</item>
+        <item>실외</item>
+    </string-array>
+
+</resources>
