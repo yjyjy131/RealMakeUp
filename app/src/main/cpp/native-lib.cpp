@@ -109,7 +109,7 @@ void balance_white(cv::Mat mat) {
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_real_autoimageprocessing_autowhitebalancingprocessing(JNIEnv *env, jobject thiz,
+Java_com_example_realmakeup_autoimageprocessing_autowhitebalancingprocessing(JNIEnv *env, jobject thiz,
                                                                        jlong input_image,
                                                                        jlong output_image) {
     // TODO: implement autowhitebalancingprocessing()
@@ -130,7 +130,7 @@ Java_com_example_real_autoimageprocessing_autowhitebalancingprocessing(JNIEnv *e
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_real_skindetection_Detect(JNIEnv *env, jobject thiz,jlong input_image, jlong right_cheek,jlong left_cheek) {
+Java_com_example_realmakeup_skindetection_Detect(JNIEnv *env, jobject thiz,jlong input_image, jlong right_cheek,jlong left_cheek) {
     // TODO: implement Detect()
     __android_log_print(ANDROID_LOG_DEBUG, "native-lib :: ",
                         "start");
@@ -194,7 +194,7 @@ Java_com_example_real_skindetection_Detect(JNIEnv *env, jobject thiz,jlong input
 
 extern "C"
 JNIEXPORT jdoubleArray JNICALL
-Java_com_example_real_skindetection_avgBGR(JNIEnv *env, jobject thiz, jlong cheek) {
+Java_com_example_realmakeup_skindetection_avgBGR(JNIEnv *env, jobject thiz, jlong cheek) {
     // TODO: implement avglab()
     Mat &cheek_right = *(Mat *) cheek;
     jdouble avgBGR[3];
@@ -226,7 +226,7 @@ Java_com_example_real_skindetection_avgBGR(JNIEnv *env, jobject thiz, jlong chee
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_real_skindetection_createskin(JNIEnv *env, jobject thiz, jlong output,
+Java_com_example_realmakeup_skindetection_createskin(JNIEnv *env, jobject thiz, jlong output,
                                                jdoubleArray result) {
     Mat &image = *(Mat *) output;
 
