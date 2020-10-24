@@ -23,7 +23,7 @@
         android:layout_height="131dp"
         android:layout_marginBottom="56dp"
         android:background="@drawable/white_btn"
-        android:text="수정 보정"
+        android:text="수동 보정"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
