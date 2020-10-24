@@ -3,13 +3,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -30,6 +33,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.StringTokenizer;
 
 
 public class skindetection extends AppCompatActivity
@@ -131,6 +135,7 @@ public class skindetection extends AppCompatActivity
                 Utils.matToBitmap(filter_image, bitmapOutput);
                 skinimage.setImageBitmap(bitmapOutput);
                 skinlayout.setVisibility(View.VISIBLE);
+                //register_user_info();
             }
         });
     }
@@ -141,7 +146,6 @@ public class skindetection extends AppCompatActivity
     public native void createskin(long output, double result[]);
 
     public void skincolor_extraction(){
-
 
         Detect(filter_image.getNativeObjAddr() ,right_cheek.getNativeObjAddr(),left_cheek.getNativeObjAddr());
 
@@ -159,5 +163,15 @@ public class skindetection extends AppCompatActivity
         createskin(filter_image.getNativeObjAddr(),result);
     }
 
+    public void register_user_info(String skinRGB, String lipRGB){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference studyRef = database.getReference("User");
 
+        String email = user.getEmail();
+        StringTokenizer stringTokenizer = new StringTokenizer(email, "@");
+        String id = stringTokenizer.nextToken(); //@ 분리
+        UserModel userinfo = new UserModel(id, skinRGB, lipRGB);
+        studyRef.child(id).setValue(userinfo);
+    }
 }
