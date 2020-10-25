@@ -40,6 +40,7 @@ public class autoimageprocessing extends AppCompatActivity {
     ImageView imageVIewOuput;
     private Mat img_input;
     private Mat img_output;
+    String env;
 
     private static final String TAG = "opencv";
     private final int GET_GALLERY_IMAGE = 200;
@@ -51,6 +52,10 @@ public class autoimageprocessing extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_autoimageprocessing);
+
+        Intent intent = getIntent();
+        env = intent.getExtras().getString("environment");
+        Log.d("intent env :: ",env);
 
         imageVIewInput = (ImageView)findViewById(R.id.imageViewInput);
         imageVIewOuput = (ImageView)findViewById(R.id.imageViewOutput);
@@ -80,6 +85,7 @@ public class autoimageprocessing extends AppCompatActivity {
                 bitmapOutput.compress(Bitmap.CompressFormat.JPEG,100,stream);
                 byte[] bytearray = stream.toByteArray();
                 intent.putExtra("image", bytearray);
+                intent.putExtra("environment",env);
                 startActivity(intent);
             }
         });

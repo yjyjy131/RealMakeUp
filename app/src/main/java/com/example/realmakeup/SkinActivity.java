@@ -65,11 +65,17 @@ public class SkinActivity extends AppCompatActivity {
 
     Bitmap bitmapOutput;
     Bitmap result;
+    String env;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skin);
+
+        Intent intent = getIntent();
+        env = intent.getExtras().getString("environment");
+        Log.d("intent env :: ",env);
 
         imageVIewInput = (ImageView)findViewById(R.id.imageViewInput);
         imageVIewOuput = (ImageView)findViewById(R.id.imageViewOutput);
@@ -225,6 +231,7 @@ public class SkinActivity extends AppCompatActivity {
                 result.compress(Bitmap.CompressFormat.JPEG,100,stream);
                 byte[] bytearray = stream.toByteArray();
                 intent.putExtra("image",bytearray);
+                intent.putExtra("environment", env);
                 startActivity(intent);
             }
         });

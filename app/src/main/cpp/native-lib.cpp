@@ -143,7 +143,7 @@ Java_com_example_realmakeup_skindetection_Detect(JNIEnv *env, jobject thiz,jlong
         Mat &img_input = *(Mat *) input_image;
         Mat &cheek_right = *(Mat *) right_cheek;
         Mat &cheek_left = *(Mat *) left_cheek;
-        cvtColor(img_input,img_input,COLOR_BGR2RGB);
+        cvtColor(img_input,img_input,COLOR_RGB2BGR);
         // And we also need a shape_predictor.  This is the tool that will predict face
         // landmark positions given an image and face bounding box.  Here we are just
         // loading the model from the shape_predictor_68_face_landmarks.dat file you gave
@@ -173,8 +173,8 @@ Java_com_example_realmakeup_skindetection_Detect(JNIEnv *env, jobject thiz,jlong
                 auto right_cheek_x1 = shape.part(5).x();
                 auto right_cheek_x2 = shape.part(6).x();
                 unsigned long right_cheek_width = right_cheek_x2 - right_cheek_x1;
-                auto right_cheek_y1 = shape.part(29).y();
-                auto right_cheek_y2 = shape.part(30).y();
+                auto right_cheek_y1 = shape.part(30).y();
+                auto right_cheek_y2 = shape.part(34).y();
                 unsigned long right_cheek_height = right_cheek_y2 - right_cheek_y1;
                 Rect roi1(right_cheek_x1, right_cheek_y1, right_cheek_width,right_cheek_height);
                 cheek_right = img_input(roi1);
@@ -183,28 +183,28 @@ Java_com_example_realmakeup_skindetection_Detect(JNIEnv *env, jobject thiz,jlong
                 auto left_cheek_x1 = shape.part(10).x();
                 auto left_cheek_x2 = shape.part(11).x();
                 unsigned long left_cheek_width = left_cheek_x2 - left_cheek_x1;
-                auto left_cheek_y1 = shape.part(29).y();
-                auto left_cheek_y2 = shape.part(30).y();
+                auto left_cheek_y1 = shape.part(30).y();
+                auto left_cheek_y2 = shape.part(34).y();
                 unsigned long left_cheek_height = left_cheek_y2 - left_cheek_y1;
                 Rect roi2(left_cheek_x1, left_cheek_y1, left_cheek_width, left_cheek_height);
                 cheek_left = img_input(roi2);
             }
         }
         else{
-                for (unsigned long j = 0; j < dets.size(); ++j) {
-                    dlib::full_object_detection shape = sp(img, dets[j]);
-                    __android_log_print(ANDROID_LOG_DEBUG, "native-lib :: ",
-                                        "lip");
-                    //아래입술
-                    auto left_cheek_x1 = shape.part(67).x();
-                    auto left_cheek_x2 = shape.part(65).x();
-                    unsigned long left_cheek_width = left_cheek_x2 - left_cheek_x1;
-                    auto left_cheek_y1 = shape.part(65).y();
-                    auto left_cheek_y2 = shape.part(56).y();
-                    unsigned long left_cheek_height = left_cheek_y2 - left_cheek_y1;
-                    Rect roi2(left_cheek_x1, left_cheek_y1, left_cheek_width, left_cheek_height);
-                    cheek_left = img_input(roi2);
-                }
+            for (unsigned long j = 0; j < dets.size(); ++j) {
+                dlib::full_object_detection shape = sp(img, dets[j]);
+                __android_log_print(ANDROID_LOG_DEBUG, "native-lib :: ",
+                                    "lip");
+                //아래입술
+                auto left_cheek_x1 = shape.part(67).x();
+                auto left_cheek_x2 = shape.part(65).x();
+                unsigned long left_cheek_width = left_cheek_x2 - left_cheek_x1;
+                auto left_cheek_y1 = shape.part(65).y();
+                auto left_cheek_y2 = shape.part(56).y();
+                unsigned long left_cheek_height = left_cheek_y2 - left_cheek_y1;
+                Rect roi2(left_cheek_x1, left_cheek_y1, left_cheek_width, left_cheek_height);
+                cheek_left = img_input(roi2);
+            }
         }
 
     }

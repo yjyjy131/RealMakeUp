@@ -2,6 +2,7 @@ package com.example.realmakeup;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -32,6 +33,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Ref;
 import java.util.StringTokenizer;
 
 
@@ -42,8 +44,6 @@ public class skindetection extends AppCompatActivity
         System.loadLibrary("native-lib");
     }
     private static final String TAG = "skin-detection";
-
-
 
     LinearLayout skinlayout;
     LinearLayout liplayout;
@@ -58,7 +58,7 @@ public class skindetection extends AppCompatActivity
     TextView loading;
 
     Bitmap filtering_bitmap;
-
+    String env;
     Mat filter_image;
     Mat temp_image;
     Mat right_cheek = new Mat();
@@ -105,6 +105,10 @@ public class skindetection extends AppCompatActivity
         copyFile("shape_predictor_68_face_landmarks.dat");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skindetection);
+        // 환경 상태 받아오기
+        Intent intent = getIntent();
+        env = intent.getExtras().getString("environment");
+        Log.d("intent env :: ",env);
 
         filteringimage = (ImageView)findViewById(R.id.filteringimage);
         skinimage = (ImageView)findViewById(R.id.skinimage);
@@ -116,12 +120,13 @@ public class skindetection extends AppCompatActivity
         animationlayout = (LinearLayout)findViewById(R.id.animation);
         loading = (TextView)findViewById(R.id.loading);
 
+
         // 피부색 보정 결과 이미지 가져오기
         Bitmap image;
         byte[] byteArray = getIntent().getByteArrayExtra("image");
         filtering_bitmap = BitmapFactory.decodeByteArray(byteArray,0,byteArray.length);
         filter_image = Imgcodecs.imdecode(new MatOfByte(byteArray), Imgcodecs.IMREAD_UNCHANGED);
-        temp_image = filter_image;
+        temp_image = filter_image.clone();
         // filtering된 이미지 가져와서 imageview에 넣기
         filteringimage.setImageBitmap(filtering_bitmap);
 
@@ -157,7 +162,10 @@ public class skindetection extends AppCompatActivity
                 Utils.matToBitmap(temp_image, bitmapOutput);
                 lipimage.setImageBitmap(bitmapOutput);
                 liplayout.setVisibility(View.VISIBLE);
-                //register_user_info();
+                String skin = String.format("#%02X%02X%02X",(int)skinresult[2],(int)skinresult[1],(int)skinresult[0]);
+                String lip = String.format("#%02X%02X%02X",(int)lipresult[2],(int)lipresult[1],(int)lipresult[0]);
+                // 사용자 정보 등록
+                register_user_info(skin, lip);
             }
         });
     }
@@ -173,11 +181,9 @@ public class skindetection extends AppCompatActivity
         double[] avg_top = new double[3];
         double[] avg_bottom = new double[3];
 
-
-
         Detect(filter_image.getNativeObjAddr() ,right_cheek.getNativeObjAddr(),left_cheek.getNativeObjAddr(),1);
-        Detect(temp_image.getNativeObjAddr(),top_lip.getNativeObjAddr(),bottom_lip.getNativeObjAddr(),0);
 
+        Detect(temp_image.getNativeObjAddr(),top_lip.getNativeObjAddr(),bottom_lip.getNativeObjAddr(),0);
         //각 볼의 평균 lab값 구하기
         avg_right = avgBGR(right_cheek.getNativeObjAddr());
         avg_left = avgBGR(left_cheek.getNativeObjAddr());
@@ -186,6 +192,7 @@ public class skindetection extends AppCompatActivity
         skinresult[1] = (avg_left[1] + avg_right[1]) / 2; //G
         skinresult[2] = (avg_left[2] + avg_right[2]) / 2; //B
         Log.d("native-lib ::: skinresult ","" + skinresult[0]+ " "+skinresult[1]+ " " +skinresult[2]);
+        createskin(filter_image.getNativeObjAddr(),skinresult);
 
 
 
@@ -196,25 +203,21 @@ public class skindetection extends AppCompatActivity
         lipresult[0] = avg_bottom[0]; //R
         lipresult[1] = avg_bottom[1]; //G
         lipresult[2] = avg_bottom[2]; //B
-        Log.d("native-lib ::: lipresult ","" + avg_bottom[0]+ " "+avg_bottom[1]+ " " +avg_bottom[2]);
-
-
-        //평균 RGB값을 이용해 이미지 채우기
-        createskin(filter_image.getNativeObjAddr(),skinresult);
+        Log.d("native-lib ::: lipresult ","" + lipresult[0]+ " "+lipresult[1]+ " " +lipresult[2]);
         createskin(temp_image.getNativeObjAddr(),lipresult);
 
     }
 
-
+// 이 함수 쓰는곳 어디임?
     public void register_user_info(String skinRGB, String lipRGB){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference studyRef = database.getReference("User");
-
         String email = user.getEmail();
         StringTokenizer stringTokenizer = new StringTokenizer(email, "@");
         String id = stringTokenizer.nextToken(); //@ 분리
-        UserModel userinfo = new UserModel(id, skinRGB, lipRGB);
-        studyRef.child(id).setValue(userinfo);
+
+        DatabaseReference colorRef = database.getReference("User").child(id).child("skinColor").child(env);
+        ColorModel colorinfo = new ColorModel(skinRGB, lipRGB);
+        colorRef.setValue(colorinfo);
     }
 }
