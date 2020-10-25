@@ -23,13 +23,6 @@ public class MyPaletteFragment extends Fragment {
         myPaletteViewModel =
                 ViewModelProviders.of(this).get(MyPaletteViewModel.class);
         View root = inflater.inflate(R.layout.fragment_my_palette, container, false);
-        final TextView textView = root.findViewById(R.id.text_tools);
-        myPaletteViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 }
