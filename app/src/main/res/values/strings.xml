@@ -12,10 +12,12 @@
     <string name="menu_item">제품 조회</string>
     <string name="menu_skin">피부색 설정</string>
 
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="spinner_brand">
         <item>etude</item>
         <item>mac</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="spinner_product">
         <item>shadows</item>
         <item>lips</item>

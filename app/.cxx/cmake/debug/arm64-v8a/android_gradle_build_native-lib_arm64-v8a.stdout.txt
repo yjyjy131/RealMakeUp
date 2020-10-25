@@ -1,19 +1,2 @@
 ninja: Entering directory `C:\Users\yoenj\RealMakeUp\app\.cxx\cmake\debug\arm64-v8a'
-[1/2] Building CXX object CMakeFiles/native-lib.dir/native-lib.cpp.o
-C:/Users/yoenj/RealMakeUp/app/src/main/cpp/native-lib.cpp:168:21: warning: result of comparison against a string literal is unspecified (use strncmp instead) [-Wstring-compare]
-        if(facename == "skin"){
-                    ^  ~~~~~~
-C:/Users/yoenj/RealMakeUp/app/src/main/cpp/native-lib.cpp:254:56: warning: format specifies type 'unsigned int' but the argument has type 'unsigned long long' [-Wformat]
-                        "B : %ull, G : %ull, R : %ull",(unsigned long long)avgBGR[0],(unsigned long long)avgBGR[1],(unsigned long long)avgBGR[2]);
-                             ~~                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                             %llu
-C:/Users/yoenj/RealMakeUp/app/src/main/cpp/native-lib.cpp:254:86: warning: format specifies type 'unsigned int' but the argument has type 'unsigned long long' [-Wformat]
-                        "B : %ull, G : %ull, R : %ull",(unsigned long long)avgBGR[0],(unsigned long long)avgBGR[1],(unsigned long long)avgBGR[2]);
-                                       ~~                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                                       %llu
-C:/Users/yoenj/RealMakeUp/app/src/main/cpp/native-lib.cpp:254:116: warning: format specifies type 'unsigned int' but the argument has type 'unsigned long long' [-Wformat]
-                        "B : %ull, G : %ull, R : %ull",(unsigned long long)avgBGR[0],(unsigned long long)avgBGR[1],(unsigned long long)avgBGR[2]);
-                                                 ~~                                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                                                 %llu
-4 warnings generated.
-[2/2] Linking CXX shared library C:\Users\yoenj\RealMakeUp\app\build\intermediates\cmake\debug\obj\arm64-v8a\libnative-lib.so
+ninja: no work to do.
