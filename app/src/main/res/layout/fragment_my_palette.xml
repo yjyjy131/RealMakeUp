@@ -1,19 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="12dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center_vertical">
     <TextView
-        android:id="@+id/text_tools"
+        android:id="@+id/main_message"
+        android:layout_marginBottom="12dp"
+        android:layout_weight="0.004"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary"
+        android:text="당신에게 어울리는 컬러 조합을 확인하세요!"/>
+    <TextView
+        android:id="@+id/title_shadow"
+        android:layout_weight="0.004"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="나의 Shadows"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/listview"
+        android:layout_weight="0.45"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/title_lip"
+        android:layout_weight="0.004"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="나의 Lips"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/listview"
+        android:layout_weight="0.45"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_weight="0.05"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/go_makeup_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/pink_btn"
+            android:layout_marginRight="5dp"
+            android:textColor="#FFFFFF"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:text="선택한 제품 테스트"/>
+
+        <Button
+            android:id="@+id/edit_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/white_btn"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:text="팔레트 수정"/>
+    </LinearLayout>
+</LinearLayout>
