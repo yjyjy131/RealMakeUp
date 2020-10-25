@@ -70,28 +70,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:layout_marginBottom="5dp"
         android:layout_weight="0.05"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/item_list_btn"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/pink_btn"
-            android:layout_marginRight="5dp"
-            android:textColor="#FFFFFF"
+            android:layout_marginLeft="7dp"
             android:layout_weight="1"
-            android:textStyle="bold"
-            android:text="브랜드별 상품 찾기"/>
+            android:background="@drawable/pink_btn"
+            android:text="브랜드별 상품 찾기"
+            android:layout_gravity="center_vertical"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/arCamera_btn"
+            android:layout_width="65dp"
+            android:layout_height="54dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_margin="7dp"
+            android:background="@drawable/ic_menu_camera"
+            android:backgroundTint="#FF3556"
+            android:padding="100dp" />
 
         <Button
             android:id="@+id/my_palette_btn"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/white_btn"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:textStyle="bold"
-            android:text="나의 팔레트"/>
+            android:paddingRight="30dp"
+            android:paddingLeft="30dp"
+            android:background="@drawable/white_btn"
+            android:text="나의 팔레트"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
     </LinearLayout>
 </LinearLayout>
