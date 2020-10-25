@@ -141,6 +141,8 @@ public class skindetection extends AppCompatActivity
             public void onClick(View v) {
                 loading.setVisibility(View.INVISIBLE);
                 skincolor_extraction();
+
+
                 SkinHex.setText(String.format("#%02X%02X%02X",(int)skinresult[2],(int)skinresult[1],(int)skinresult[0]));
                 LipHex.setText(String.format("#%02X%02X%02X",(int)lipresult[2],(int)lipresult[1],(int)lipresult[0]));
 
@@ -161,7 +163,7 @@ public class skindetection extends AppCompatActivity
     }
 
 
-    public native void Detect(long faceimage,long right,long left,String name);
+    public native void Detect(long faceimage,long right,long left,int num);
     public native double[] avgBGR(long cheek);
     public native void createskin(long output, double result[]);
 
@@ -173,33 +175,32 @@ public class skindetection extends AppCompatActivity
 
 
 
-        Detect(filter_image.getNativeObjAddr() ,right_cheek.getNativeObjAddr(),left_cheek.getNativeObjAddr(),"skin");
-        Detect(temp_image.getNativeObjAddr(),top_lip.getNativeObjAddr(),bottom_lip.getNativeObjAddr(),"lip");
+        Detect(filter_image.getNativeObjAddr() ,right_cheek.getNativeObjAddr(),left_cheek.getNativeObjAddr(),1);
+        Detect(temp_image.getNativeObjAddr(),top_lip.getNativeObjAddr(),bottom_lip.getNativeObjAddr(),0);
 
         //각 볼의 평균 lab값 구하기
         avg_right = avgBGR(right_cheek.getNativeObjAddr());
         avg_left = avgBGR(left_cheek.getNativeObjAddr());
         //두 볼의 평균 lab값 구하기
-        skinresult[0] = (avg_left[0] + avg_right[0]) / 2; //B
+        skinresult[0] = (avg_left[0] + avg_right[0]) / 2; //R
         skinresult[1] = (avg_left[1] + avg_right[1]) / 2; //G
-        skinresult[2] = (avg_left[2] + avg_right[2]) / 2; //R
-        Log.d("native-lib ::: skinresult ","" + skinresult[2]+ " "+skinresult[1]+ " " +skinresult[0]);
-
-        //평균 RGB값을 이용해 이미지 채우기
-        createskin(filter_image.getNativeObjAddr(),skinresult);
-
+        skinresult[2] = (avg_left[2] + avg_right[2]) / 2; //B
+        Log.d("native-lib ::: skinresult ","" + skinresult[0]+ " "+skinresult[1]+ " " +skinresult[2]);
 
 
 
         //각 볼의 평균 lab값 구하기
-        avg_top = avgBGR(top_lip.getNativeObjAddr());
+        //avg_top = avgBGR(top_lip.getNativeObjAddr());
         avg_bottom = avgBGR(bottom_lip.getNativeObjAddr());
         //두 볼의 평균 lab값 구하기
-        lipresult[0] = (avg_top[0] + avg_bottom[0]) / 2; //B
-        lipresult[1] = (avg_top[1] + avg_bottom[1]) / 2; //G
-        lipresult[2] = (avg_top[2] + avg_bottom[2]) / 2; //R
-        Log.d("native-lib ::: lipresult ","" + lipresult[2]+ " "+lipresult[1]+ " " +lipresult[0]);
+        lipresult[0] = avg_bottom[0]; //R
+        lipresult[1] = avg_bottom[1]; //G
+        lipresult[2] = avg_bottom[2]; //B
+        Log.d("native-lib ::: lipresult ","" + avg_bottom[0]+ " "+avg_bottom[1]+ " " +avg_bottom[2]);
 
+
+        //평균 RGB값을 이용해 이미지 채우기
+        createskin(filter_image.getNativeObjAddr(),skinresult);
         createskin(temp_image.getNativeObjAddr(),lipresult);
 
     }
