@@ -2,6 +2,8 @@ package com.example.realmakeup.ui.ItemList;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -19,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.realmakeup.ColorModel;
 import com.example.realmakeup.R;
 import com.example.realmakeup.ui.MyPalette.MyPaletteFragment;
 import com.example.realmakeup.ui.home.HomeFragment;
@@ -44,6 +49,10 @@ public class ItemListFragment extends Fragment {
     ArrayAdapter<CharSequence> adapter_brand, adapter_item;
     Button search_btn;
     product_Adapter singerAdapter;
+
+    private FirebaseUser userAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference datebaseReference = firebaseDatabase.getReference();
 
@@ -68,7 +77,6 @@ public class ItemListFragment extends Fragment {
         brand_cate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -84,7 +92,6 @@ public class ItemListFragment extends Fragment {
             }
         });
 
-
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,29 +101,37 @@ public class ItemListFragment extends Fragment {
             }
         });
 
-        // 제품 클릭시
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-        });
-
         return root;
     }
 
     void get_product_info(String brand, String item){
         singerAdapter = new product_Adapter();
+        // 제품 클릭시
         gridView.setAdapter(singerAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("item_num : ", Integer.toString(i));
+                String brand = brand_cate.getSelectedItem().toString();
+                String item = item_cate.getSelectedItem().toString();
+                product_SingleItem singleItem = singerAdapter.getItem(i);
+                String product_key = singleItem.getProductKey();
+                String product_name = singleItem.getName();
+
+                Dialog_Item dialog_item = new Dialog_Item(getActivity());
+                dialog_item.callFunction(brand, item, product_name, product_key);
+            }
+        });
 
         datebaseReference.child(brand).child(item).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String product_key = ds.getKey();
                     String name = ds.child("name").getValue().toString();    // name
                     String price = ds.child("price").getValue().toString();   // price
                     String titleImg = ds.child("titleImg").getValue().toString();   // titleImg
-                    singerAdapter.addItem(new product_SingleItem(name, price, titleImg));
+                    singerAdapter.addItem(new product_SingleItem(name, price, titleImg, product_key));
                     singerAdapter.notifyDataSetChanged();
                 }
             }
