@@ -15,6 +15,7 @@ public class product_Adapter extends BaseAdapter {
     String name;
     String price;
     String imgUrl;
+    String key;
     LayoutInflater inf;
 
 
@@ -23,10 +24,11 @@ public class product_Adapter extends BaseAdapter {
     }
 
 
-    public product_Adapter(Context context, String name, String price, String imgUrl) {
+    public product_Adapter(Context context, String name, String price, String imgUrl, String key) {
         this.name = name;
         this.price = price;
         this.imgUrl = imgUrl;
+        this.key = key;
         inf = (LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -57,7 +59,7 @@ public class product_Adapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         product_SingleViewer singerViewer = new product_SingleViewer(viewGroup.getContext().getApplicationContext());
         singerViewer.setItem(items.get(i));
-        Log.d("MyStudy_Adapter:getView:i ",String.valueOf(i));
+        Log.d("My_Adapter:getView:i ",String.valueOf(i));
         return singerViewer;
     }
 }

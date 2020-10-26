@@ -58,6 +58,7 @@
             android:textSize="36sp"
             android:textStyle="bold" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -146,11 +147,8 @@
 
         <Button
             android:id="@+id/mainbutton"
-<<<<<<< HEAD
             android:background="@drawable/white_btn"
             android:textColor="#FFFFFF"
-=======
->>>>>>> kyj_feature
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -168,11 +166,8 @@
 
         <Button
             android:id="@+id/complete"
-<<<<<<< HEAD
             android:background="@drawable/white_btn"
             android:textColor="#FFFFFF"
-=======
->>>>>>> kyj_feature
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
