@@ -168,6 +168,13 @@ public class skindetection extends AppCompatActivity
                 register_user_info(skin, lip);
             }
         });
+
+        Button complete = findViewById(R.id.complete);
+        complete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 
@@ -208,7 +215,6 @@ public class skindetection extends AppCompatActivity
 
     }
 
-// 이 함수 쓰는곳 어디임?
     public void register_user_info(String skinRGB, String lipRGB){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase database = FirebaseDatabase.getInstance();

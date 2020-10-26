@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="12dp"
+    android:layout_margin="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -40,38 +40,66 @@
         android:textSize="18sp"
         android:text="고객님의 맞춤 추천 상품을 확인하세요 :)"/>
 
-    <ScrollView
+    <TextView
+        android:id="@+id/home_title_shadow"
+        android:layout_weight="0.004"
         android:layout_width="match_parent"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/listview"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="나의 Shadows"/>
+    <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_weight="0.45"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <GridView
+            android:id="@+id/home_shadow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/listview"
+            android:layout_gravity="center_horizontal"
+            android:numColumns="2" />
+    </LinearLayout>
 
-    <ScrollView
+    <TextView
+        android:id="@+id/home_title_lip"
+        android:layout_weight="0.004"
         android:layout_width="match_parent"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/listview"
-        android:layout_weight="0.45"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="나의 Lips"/>
 
-        <LinearLayout
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_weight="0.45"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="horizontal">
+
+        <GridView
+            android:id="@+id/home_lip"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/listview"
+            android:layout_gravity="center_horizontal"
+            android:numColumns="2" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center_vertical"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
-        android:layout_weight="0.1"
+        android:layout_weight="0.08"
         android:orientation="horizontal">
 
         <Button
@@ -88,7 +116,7 @@
         <Button
             android:id="@+id/arCamera_btn"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="0.2"
             android:layout_margin="7dp"

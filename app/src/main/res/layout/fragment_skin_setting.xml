@@ -1,72 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="12dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <Button
-        android:id="@+id/autobutton"
-        android:layout_width="221dp"
-        android:layout_height="131dp"
-        android:layout_marginBottom="56dp"
-        android:background="@drawable/pink_btn"
-        android:text="자동 보정"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/filterbutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/filterbutton"
-        android:layout_width="221dp"
-        android:layout_height="131dp"
-        android:layout_marginBottom="56dp"
-        android:background="@drawable/white_btn"
-        android:text="수동 보정"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:entries="@array/환경"
-        android:layout_width="134dp"
-        android:layout_height="47dp"
-        app:layout_constraintBottom_toTopOf="@+id/autobutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0.25" />
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_gravity="center_vertical">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="182dp"
-        android:layout_height="118dp"
-        android:layout_marginTop="88dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
         android:gravity="center"
         android:text="Image filter"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/autobutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.086" />
-
+        android:textSize="40sp"
+        android:textStyle="bold" />
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="wrap_content"
+        android:layout_weight="0.1"
+        android:gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="사용자 환경 선택"
-        app:layout_constraintBottom_toTopOf="@+id/autobutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.0" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="사용자 환경 선택" />
+    <Spinner
+        android:id="@+id/spinner"
+        android:entries="@array/환경"
+        android:layout_weight="0.1"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/autobutton"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginTop="70dp"
+        android:layout_weight="0.4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/pink_btn"
+        android:text="자동 보정"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/filterbutton" />
+
+    <Button
+        android:id="@+id/filterbutton"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="70dp"
+        android:layout_weight="0.4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/white_btn"
+        android:text="수동 보정"
+        android:textColor="#FFFFFF" />
+
+
+</LinearLayout>
