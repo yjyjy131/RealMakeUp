@@ -1,3 +1,5 @@
 # ninja log v5
-1	9385	625344562	CMakeFiles/native-lib.dir/native-lib.cpp.o	175eb18e7812dda9
-9402	9811	625344563	C:/Users/yoenj/RealMakeUp/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	fe71429c80e70318
+1	7124	625435196	CMakeFiles/native-lib.dir/native-lib.cpp.o	85cb820727637146
+7129	7378	625435196	C:/Users/ychoi/AndroidStudioProjects/RealMakeUp/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	a18cc9b13cf58e07
+5	6831	625436098	CMakeFiles/native-lib.dir/native-lib.cpp.o	85cb820727637146
+6831	7031	625436099	C:/Users/ychoi/AndroidStudioProjects/RealMakeUp/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	a18cc9b13cf58e07

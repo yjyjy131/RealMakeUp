@@ -18,47 +18,7 @@
 using namespace std;
 using namespace cv;
 using namespace dlib;
-void LAB2RGB(int L, int a, int b, unsigned char & R, unsigned char & G, unsigned char & B)
-{
-    float X, Y, Z, fX, fY, fZ;
-    int RR, GG, BB;
 
-    fY = pow((L + 16.0) / 116.0, 3.0);
-    if (fY < 0.008856)
-        fY = L / 903.3;
-    Y = fY;
-
-    if (fY > 0.008856)
-        fY = powf(fY, 1.0/3.0);
-    else
-        fY = 7.787 * fY + 16.0/116.0;
-
-    fX = a / 500.0 + fY;
-    if (fX > 0.206893)
-        X = powf(fX, 3.0);
-    else
-        X = (fX - 16.0/116.0) / 7.787;
-
-    fZ = fY - b /200.0;
-    if (fZ > 0.206893)
-        Z = powf(fZ, 3.0);
-    else
-        Z = (fZ - 16.0/116.0) / 7.787;
-
-    X *= (0.950456 * 255);
-    Y *=             255;
-    Z *= (1.088754 * 255);
-
-    RR =  (int)(3.240479*X - 1.537150*Y - 0.498535*Z + 0.5);
-    GG = (int)(-0.969256*X + 1.875992*Y + 0.041556*Z + 0.5);
-    BB =  (int)(0.055648*X - 0.204043*Y + 1.057311*Z + 0.5);
-
-    R = (unsigned char)(RR < 0 ? 0 : RR > 255 ? 255 : RR);
-    G = (unsigned char)(GG < 0 ? 0 : GG > 255 ? 255 : GG);
-    B = (unsigned char)(BB < 0 ? 0 : BB > 255 ? 255 : BB);
-
-    //printf("Lab=(%f,%f,%f) ==> RGB(%f,%f,%f)\n",L,a,b,*R,*G,*B);
-}
 void balance_white(cv::Mat mat) {
     double discard_ratio = 0.05;
     int hists[3][256];

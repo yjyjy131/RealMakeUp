@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/yoenj/RealMakeUp/app/src/main/cpp
+# Install script for directory: C:/Users/ychoi/AndroidStudioProjects/RealMakeUp/app/src/main/cpp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/yoenj/RealMakeUp/app/.cxx/cmake/release/arm64-v8a/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/ychoi/AndroidStudioProjects/RealMakeUp/app/.cxx/cmake/release/arm64-v8a/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
