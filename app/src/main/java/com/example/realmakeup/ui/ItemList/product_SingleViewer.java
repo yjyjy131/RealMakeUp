@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import com.example.realmakeup.R;
 import com.example.realmakeup.ui.ItemList.product_SingleItem;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,7 +52,7 @@ public class product_SingleViewer extends LinearLayout {
 
     public void setItem(product_SingleItem singleItem){
         name.setText(singleItem.getName());
-        price.setText(singleItem.getPrice());
+        price.setText(singleItem.getPrice() + "원");
         this.imgUrl = singleItem.getImage();
         this.bitmap = downloadUrl();
         imageView.setImageBitmap(bitmap);

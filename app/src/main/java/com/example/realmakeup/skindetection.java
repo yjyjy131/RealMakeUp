@@ -141,40 +141,48 @@ public class skindetection extends AppCompatActivity
 
 
 
+
         Button extract = (Button)findViewById(R.id.extraction);
         extract.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                //loading.setVisibility(View.INVISIBLE);
                 task = new BackgroundTask();
+
                 task.execute();
 
 
 
-
-                String skin = String.format("#%02X%02X%02X",(int)skinresult[2],(int)skinresult[1],(int)skinresult[0]);
-                String lip = String.format("#%02X%02X%02X",(int)lipresult[2],(int)lipresult[1],(int)lipresult[0]);
-                // 사용자 정보 등록
-                register_user_info(skin, lip);
             }
         });
-    }
 
-    //새로운 TASK정의 (AsyncTask)
+
+    }
     // < >안에 들은 자료형은 순서대로 doInBackground, onProgressUpdate, onPostExecute의 매개변수 자료형을 뜻한다.(내가 사용할 매개변수타입을 설정하면된다)
-    class BackgroundTask extends AsyncTask<Void , Void , String> {
+    class BackgroundTask extends AsyncTask<Void , Integer , Integer> {
         //초기화 단계에서 사용한다. 초기화관련 코드를 작성했다.
         protected void onPreExecute() {
-            loading.setVisibility(View.INVISIBLE);
+            loading.setText("피부색 추출 중 ...");
         }
 
         //스레드의 백그라운드 작업 구현
         //여기서 매개변수 Intger ... values란 values란 이름의 Integer배열이라 생각하면된다.
         //배열이라 여러개를 받을 수 도 있다. ex) excute(100, 10, 20, 30); 이런식으로 전달 받으면 된다.
-        protected String doInBackground(Void ... values) {
+        protected Integer doInBackground(Void... voids) {
             //isCancelled()=> Task가 취소되었을때 즉 cancel당할때까지 반복
-            publishProgress();
+
 
             skincolor_extraction();
+            return null;
+        }
+
+        //UI작업 관련 작업 (백그라운드 실행중 이 메소드를 통해 UI작업을 할 수 있다)
+        //publishProgress(value)의 value를 값으로 받는다.values는 배열이라 여러개 받기가능
+        protected void onProgressUpdate(Integer ... values) {
+        }
+
+
+        //이 Task에서(즉 이 스레드에서) 수행되던 작업이 종료되었을 때 호출됨
+        protected void onPostExecute(Integer result) {
 
             SkinHex.setText(String.format("#%02X%02X%02X",(int)skinresult[2],(int)skinresult[1],(int)skinresult[0]));
             LipHex.setText(String.format("#%02X%02X%02X",(int)lipresult[2],(int)lipresult[1],(int)lipresult[0]));
@@ -188,26 +196,26 @@ public class skindetection extends AppCompatActivity
             bitmapOutput = Bitmap.createBitmap(temp_image.cols(), temp_image.rows(), Bitmap.Config.ARGB_8888);
             Utils.matToBitmap(temp_image, bitmapOutput);
             lipimage.setImageBitmap(bitmapOutput);
-            return "finish";
-        }
-        //UI작업 관련 작업 (백그라운드 실행중 이 메소드를 통해 UI작업을 할 수 있다)
-        //publishProgress(value)의 value를 값으로 받는다.values는 배열이라 여러개 받기가능
-        protected void onProgressUpdate(Void ... values) {
-            loading.setVisibility(View.VISIBLE);
-            loading.setText("피부색 추출 중입니다...");
-        }
 
-
-        //이 Task에서(즉 이 스레드에서) 수행되던 작업이 종료되었을 때 호출됨
-        protected void onPostExecute(String result) {
+            loading.setVisibility(View.INVISIBLE);
             skinlayout.setVisibility(View.VISIBLE);
+
             liplayout.setVisibility(View.VISIBLE);
+
+            String skin = String.format("#%02X%02X%02X",(int)skinresult[2],(int)skinresult[1],(int)skinresult[0]);
+            String lip = String.format("#%02X%02X%02X",(int)lipresult[2],(int)lipresult[1],(int)lipresult[0]);
+            // 사용자 정보 등록
+            register_user_info(skin, lip);
         }
 
+        //Task가 취소되었을때 호출
+        protected void onCancelled() {
+            loading.setText("얼굴 인식 실패");
+        }
     }
 
 
-    public native void Detect(long faceimage,long right,long left,int num);
+    public native void Detect(long faceimage,long lipimagem,long right,long left,long bottom);
     public native double[] avgBGR(long cheek);
     public native void createskin(long output, double result[]);
 
@@ -217,9 +225,8 @@ public class skindetection extends AppCompatActivity
         double[] avg_top = new double[3];
         double[] avg_bottom = new double[3];
 
-        Detect(filter_image.getNativeObjAddr() ,right_cheek.getNativeObjAddr(),left_cheek.getNativeObjAddr(),1);
+        Detect(filter_image.getNativeObjAddr(),temp_image.getNativeObjAddr() ,right_cheek.getNativeObjAddr(),left_cheek.getNativeObjAddr(),bottom_lip.getNativeObjAddr());
 
-        Detect(temp_image.getNativeObjAddr(),top_lip.getNativeObjAddr(),bottom_lip.getNativeObjAddr(),0);
         //각 볼의 평균 lab값 구하기
         avg_right = avgBGR(right_cheek.getNativeObjAddr());
         avg_left = avgBGR(left_cheek.getNativeObjAddr());
@@ -232,10 +239,10 @@ public class skindetection extends AppCompatActivity
 
 
 
-        //각 볼의 평균 lab값 구하기
+        //아랫 입술의 평균 lab값 구하기
         //avg_top = avgBGR(top_lip.getNativeObjAddr());
         avg_bottom = avgBGR(bottom_lip.getNativeObjAddr());
-        //두 볼의 평균 lab값 구하기
+        //아랫 입술의 평균 lab값 구하기
         lipresult[0] = avg_bottom[0]; //R
         lipresult[1] = avg_bottom[1]; //G
         lipresult[2] = avg_bottom[2]; //B
@@ -244,7 +251,7 @@ public class skindetection extends AppCompatActivity
 
     }
 
-// 이 함수 쓰는곳 어디임?
+    // 이 함수 쓰는곳 어디임?
     public void register_user_info(String skinRGB, String lipRGB){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase database = FirebaseDatabase.getInstance();

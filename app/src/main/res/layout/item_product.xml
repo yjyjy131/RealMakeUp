@@ -41,16 +41,5 @@
             android:textSize="12dp"
             android:textColor="#FFFFFF"/>
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_height="35dp"
-            android:text="팔레트 담기"
-            android:textSize="12dp"
-            android:background="@drawable/pink_btn"
-            android:textColor="#FFFFFF"/>
-
-
     </LinearLayout>
 </LinearLayout>

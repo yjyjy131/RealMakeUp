@@ -68,18 +68,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:gravity="center_vertical"
         android:layout_marginBottom="5dp"
-        android:layout_weight="0.05"
+        android:layout_weight="0.1"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/item_list_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
             android:background="@drawable/pink_btn"
             android:text="브랜드별 상품 찾기"
             android:layout_gravity="center_vertical"
@@ -88,23 +87,20 @@
 
         <Button
             android:id="@+id/arCamera_btn"
-            android:layout_width="65dp"
-            android:layout_height="54dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:layout_weight="0.2"
             android:layout_margin="7dp"
             android:background="@drawable/ic_menu_camera"
-            android:backgroundTint="#FF3556"
-            android:padding="100dp" />
+            android:backgroundTint="@color/colorAccent" />
 
         <Button
             android:id="@+id/my_palette_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:paddingRight="30dp"
-            android:paddingLeft="30dp"
+            android:layout_weight="0.4"
             android:background="@drawable/white_btn"
             android:text="나의 팔레트"
             android:textColor="#FFFFFF"
