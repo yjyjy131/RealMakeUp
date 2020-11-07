@@ -20,6 +20,7 @@ import com.example.realmakeup.MakeupActivity;
 import com.example.realmakeup.R;
 //import com.example.realmakeup.ui.ItemList.ItemListFragment;
 //import com.example.realmakeup.ui.MyPalette.MyPaletteFragment;
+import com.example.realmakeup.ui.MyPalette.MyPaletteFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -32,7 +33,6 @@ public class HomeFragment extends Fragment {
     Button arCamera_btn;
     String email = user.getEmail();
 
-    // 각각의 Fragment마다 Instance를 반환해 줄 메소드를 생성
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
@@ -58,7 +58,6 @@ public class HomeFragment extends Fragment {
         palette_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
             }
         });
 
