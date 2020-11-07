@@ -147,7 +147,6 @@ public class skindetection extends AppCompatActivity
                 loading.setVisibility(View.INVISIBLE);
                 skincolor_extraction();
 
-
                 SkinHex.setText(String.format("#%02X%02X%02X",(int)skinresult[2],(int)skinresult[1],(int)skinresult[0]));
                 LipHex.setText(String.format("#%02X%02X%02X",(int)lipresult[2],(int)lipresult[1],(int)lipresult[0]));
 
@@ -168,6 +167,13 @@ public class skindetection extends AppCompatActivity
                 register_user_info(skin, lip);
             }
         });
+
+        Button complete = findViewById(R.id.complete);
+        complete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 
@@ -180,7 +186,6 @@ public class skindetection extends AppCompatActivity
         double[] avg_left = new double[3];
         double[] avg_top = new double[3];
         double[] avg_bottom = new double[3];
-
         Detect(filter_image.getNativeObjAddr() ,right_cheek.getNativeObjAddr(),left_cheek.getNativeObjAddr(),1);
 
         Detect(temp_image.getNativeObjAddr(),top_lip.getNativeObjAddr(),bottom_lip.getNativeObjAddr(),0);
@@ -195,6 +200,7 @@ public class skindetection extends AppCompatActivity
         createskin(filter_image.getNativeObjAddr(),skinresult);
 
 
+        loading.setText("입술색 추출 진행중...");
 
         //각 볼의 평균 lab값 구하기
         //avg_top = avgBGR(top_lip.getNativeObjAddr());
@@ -204,11 +210,11 @@ public class skindetection extends AppCompatActivity
         lipresult[1] = avg_bottom[1]; //G
         lipresult[2] = avg_bottom[2]; //B
         Log.d("native-lib ::: lipresult ","" + lipresult[0]+ " "+lipresult[1]+ " " +lipresult[2]);
+
         createskin(temp_image.getNativeObjAddr(),lipresult);
 
     }
 
-// 이 함수 쓰는곳 어디임?
     public void register_user_info(String skinRGB, String lipRGB){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase database = FirebaseDatabase.getInstance();

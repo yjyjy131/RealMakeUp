@@ -75,7 +75,8 @@ public class Dialog_Item {
                     Toast.makeText(context, "\"" + product_name+ "\" 을 나의 팔레트에 추가하였습니다.", Toast.LENGTH_SHORT).show();
                     dlg.dismiss();
                 } else if (item.equals("lips")) {
-                    databaseReference.child("User").child(user_id).child("paletteEyes").child(product_key).setValue(paletteModel);
+                    databaseReference.child(user_id).child("paletteLips").child(product_key).setValue(paletteModel);
+                    Toast.makeText(context, "\"" + product_name+ "\" 을 나의 팔레트에 추가하였습니다.", Toast.LENGTH_SHORT).show();
                     dlg.dismiss();
                 }
             }
