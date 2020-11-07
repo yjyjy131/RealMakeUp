@@ -40,18 +40,100 @@
         android:textSize="18sp"
         android:text="고객님의 맞춤 추천 상품을 확인하세요 :)"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:background="@drawable/listview"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/skin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/skinimage"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="20dp"
+                android:layout_weight="0.5"
+                app:srcCompat="@drawable/ic_image" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.25"
+                android:gravity="center"
+                android:textColor="@color/colorAccent"
+                android:text="맞춤 퍼스널 Color"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/skinHex"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.25"
+                android:gravity="center"
+                android:text="#00000"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/lipimage"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="20dp"
+                android:layout_weight="0.5"
+                app:srcCompat="@drawable/ic_image"/>
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.25"
+                android:gravity="center"
+                android:textColor="@color/colorAccent"
+                android:text="나의 팔레트 Color"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/lipHex"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="#000000"
+                android:textSize="18sp"
+                android:layout_weight="0.25" />
+        </LinearLayout>
+    </LinearLayout>
+
+
     <TextView
         android:id="@+id/home_title_shadow"
         android:layout_weight="0.004"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:text="나의 Shadows"/>
+        android:text="나만의 맞춤 추천 제품"/>
+
     <LinearLayout
         android:id="@+id/linearLayout1"
-        android:layout_weight="0.45"
+        android:layout_weight="0.7"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:orientation="horizontal">
@@ -63,25 +145,8 @@
             android:layout_height="match_parent"
             android:background="@drawable/listview"
             android:layout_gravity="center_horizontal"
-            android:numColumns="2" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/home_title_lip"
-        android:layout_weight="0.004"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:text="나의 Lips"/>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_weight="0.45"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:orientation="horizontal">
+            android:numColumns="1"
+            android:layout_marginRight="5dp"/>
 
         <GridView
             android:id="@+id/home_lip"
@@ -90,7 +155,8 @@
             android:layout_height="match_parent"
             android:background="@drawable/listview"
             android:layout_gravity="center_horizontal"
-            android:numColumns="2" />
+            android:numColumns="1"
+            android:layout_marginLeft="5dp"/>
     </LinearLayout>
 
     <LinearLayout

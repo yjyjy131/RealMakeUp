@@ -93,6 +93,7 @@ public class MyPaletteFragment extends Fragment {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         final String product_key = ds.getKey();
                         String brand = ds.child("brand").getValue().toString();
+                        final String detail_key = ds.child("colorKey").getValue().toString();
                         lip_list.add(product_key);
 
                         //제품 정보 가져오기
@@ -103,9 +104,11 @@ public class MyPaletteFragment extends Fragment {
                                     if (ds.getKey().equals(product_key)) {
                                         String key = ds.getKey();
                                         String name = ds.child("name").getValue().toString();    // name
+                                        String detail_name = ds.child("colorName").child(detail_key).getValue().toString(); // 상세 제품명
                                         String price = ds.child("price").getValue().toString();   // price
-                                        String titleImg = ds.child("titleImg").getValue().toString();   // titleImg
-                                        lipAdapter.addItem(new product_SingleItem(name, price, titleImg, key));
+                                        String Img = ds.child("titleImg").getValue().toString();   // titleImg
+                                        //String Img = ds.child("image").child(detail_key).getValue().toString();   // detailImg
+                                        lipAdapter.addItem(new product_SingleItem(name +"\n"+ detail_name, price, Img, key));
                                         lipAdapter.notifyDataSetChanged();
                                     }
                                     //singerAdapter.addItem(new MyStudy_SingerItem("test","period","time","zp"));
@@ -137,6 +140,7 @@ public class MyPaletteFragment extends Fragment {
                     //lipAdapter.resetItem(); // 중복 방지
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         final String product_key = ds.getKey();
+                        final String detail_key = ds.child("colorKey").getValue().toString();
                         String brand = ds.child("brand").getValue().toString();
                         Log.d("brand: ", brand);
                         shadow_list.add(product_key);
@@ -149,9 +153,10 @@ public class MyPaletteFragment extends Fragment {
                                     if (ds.getKey().equals(product_key)) {
                                         String key = ds.getKey();
                                         String name = ds.child("name").getValue().toString();    // name
+                                        String detail_name = ds.child("colorName").child(detail_key).getValue().toString(); // 상세 제품명
                                         String price = ds.child("price").getValue().toString();   // price
                                         String titleImg = ds.child("titleImg").getValue().toString();   // titleImg
-                                        shadowAdapter.addItem(new product_SingleItem(name, price, titleImg, key));
+                                        shadowAdapter.addItem(new product_SingleItem(name +"\n"+ detail_name, price, titleImg, key));
                                         shadowAdapter.notifyDataSetChanged();
                                     }
                                     //singerAdapter.addItem(new MyStudy_SingerItem("test","period","time","zp"));
