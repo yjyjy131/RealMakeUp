@@ -3,6 +3,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -66,6 +69,7 @@ public class skindetection extends AppCompatActivity
     Mat top_lip = new Mat();
     Mat bottom_lip = new Mat();
 
+    BackgroundTask task;
 
     double[] skinresult = new double[3];
     double[] lipresult = new double[3];
@@ -144,29 +148,9 @@ public class skindetection extends AppCompatActivity
         Button extract = (Button)findViewById(R.id.extraction);
         extract.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                loading.setVisibility(View.INVISIBLE);
-                skincolor_extraction();
-                double[] CVS = new double[3];
-                CVS = cmyk(skinresult[0], skinresult[1], skinresult[2]);
-                int personal_code = color_test((int)CVS[0], (int)CVS[1], (int)CVS[2]);
-                SkinHex.setText(String.format("#%02X%02X%02X",(int)skinresult[2],(int)skinresult[1],(int)skinresult[0]));
-                LipHex.setText(String.format("#%02X%02X%02X",(int)lipresult[2],(int)lipresult[1],(int)lipresult[0]));
-
-                Bitmap bitmapOutput;
-                bitmapOutput = Bitmap.createBitmap(filter_image.cols(), filter_image.rows(), Bitmap.Config.ARGB_8888);
-                Utils.matToBitmap(filter_image, bitmapOutput);
-                skinimage.setImageBitmap(bitmapOutput);
-                skinlayout.setVisibility(View.VISIBLE);
-
-                //lip이미지에 넣기
-                bitmapOutput = Bitmap.createBitmap(temp_image.cols(), temp_image.rows(), Bitmap.Config.ARGB_8888);
-                Utils.matToBitmap(temp_image, bitmapOutput);
-                lipimage.setImageBitmap(bitmapOutput);
-                liplayout.setVisibility(View.VISIBLE);
-                String skin = String.format("#%02X%02X%02X",(int)skinresult[2],(int)skinresult[1],(int)skinresult[0]);
-                String lip = String.format("#%02X%02X%02X",(int)lipresult[2],(int)lipresult[1],(int)lipresult[0]);
-                // 사용자 정보 등록
-                register_user_info(skin, lip, personal_code);
+                //백그라운드 작업 (Asyntask)
+                task = new BackgroundTask();
+                task.execute();
             }
         });
 
@@ -178,8 +162,70 @@ public class skindetection extends AppCompatActivity
         });
     }
 
+    // < >안에 들은 자료형은 순서대로 doInBackground, onProgressUpdate, onPostExecute의 매개변수 자료형을 뜻한다.(내가 사용할 매개변수타입을 설정하면된다)
+    class BackgroundTask extends AsyncTask<Void , Integer , Integer> {
+        //초기화 단계에서 사용한다. 초기화관련 코드를 작성했다.
+        protected void onPreExecute() {
+            loading.setText("피부색 추출 중 ...");
+        }
 
-    public native void Detect(long faceimage,long right,long left,int num);
+        //스레드의 백그라운드 작업 구현
+        protected Integer doInBackground(Void... voids) {
+            //피부색 추출
+            skincolor_extraction();
+            return null;
+        }
+
+        //UI작업 관련 작업 (백그라운드 실행중 이 메소드를 통해 UI작업을 할 수 있다)
+        //publishProgress(value)의 value를 값으로 받는다.values는 배열이라 여러개 받기가능
+        protected void onProgressUpdate(Integer ... values) {
+        }
+
+
+        //이 Task에서(즉 이 스레드에서) 수행되던 작업이 종료되었을 때 호출됨
+        protected void onPostExecute(Integer result) {
+
+
+            double[] CVS = new double[3];
+            CVS = cmyk(skinresult[0], skinresult[1], skinresult[2]);
+            int personal_code = color_test((int)CVS[0], (int)CVS[1], (int)CVS[2]);
+            //색상 코드
+            SkinHex.setText(String.format("#%02X%02X%02X",(int)skinresult[2],(int)skinresult[1],(int)skinresult[0]));
+            LipHex.setText(String.format("#%02X%02X%02X",(int)lipresult[2],(int)lipresult[1],(int)lipresult[0]));
+
+            //피부이미지 넣기
+            Bitmap bitmapOutput;
+            bitmapOutput = Bitmap.createBitmap(filter_image.cols(), filter_image.rows(), Bitmap.Config.ARGB_8888);
+            Utils.matToBitmap(filter_image, bitmapOutput);
+            skinimage.setImageBitmap(bitmapOutput);
+            // imageview 둥글게 만들기
+
+
+            //lip이미지에 넣기
+            bitmapOutput = Bitmap.createBitmap(temp_image.cols(), temp_image.rows(), Bitmap.Config.ARGB_8888);
+            Utils.matToBitmap(temp_image, bitmapOutput);
+            lipimage.setImageBitmap(bitmapOutput);
+
+
+            //로딩화면 가리고, 피부색과 입술색 추출하기
+            loading.setVisibility(View.INVISIBLE);
+            skinlayout.setVisibility(View.VISIBLE);
+            liplayout.setVisibility(View.VISIBLE);
+
+
+            // 피부색과 입술색의 정보를 사용자 정보 등록
+            String skin = String.format("#%02X%02X%02X",(int)skinresult[2],(int)skinresult[1],(int)skinresult[0]);
+            String lip = String.format("#%02X%02X%02X",(int)lipresult[2],(int)lipresult[1],(int)lipresult[0]);
+            // 사용자 정보 등록
+            register_user_info(skin, lip, personal_code);
+        }
+
+        //Task가 취소되었을때 호출
+        protected void onCancelled() {
+            loading.setText("얼굴 인식 실패");
+        }
+    }
+    public native void Detect(long faceimage,long lipimage,long right,long left,long bottom);
     public native double[] avgBGR(long cheek);
     public native void createskin(long output, double result[]);
 
@@ -267,13 +313,13 @@ public class skindetection extends AppCompatActivity
         double[] avg_left = new double[3];
         double[] avg_top = new double[3];
         double[] avg_bottom = new double[3];
-        Detect(filter_image.getNativeObjAddr() ,right_cheek.getNativeObjAddr(),left_cheek.getNativeObjAddr(),1);
 
-        Detect(temp_image.getNativeObjAddr(),top_lip.getNativeObjAddr(),bottom_lip.getNativeObjAddr(),0);
-        //각 볼의 평균 lab값 구하기
+        Detect(filter_image.getNativeObjAddr(),temp_image.getNativeObjAddr() ,right_cheek.getNativeObjAddr(),left_cheek.getNativeObjAddr(),bottom_lip.getNativeObjAddr());
+
+        //각 볼의 평균 RGB값 구하기
         avg_right = avgBGR(right_cheek.getNativeObjAddr());
         avg_left = avgBGR(left_cheek.getNativeObjAddr());
-        //두 볼의 평균 lab값 구하기
+        //두 볼의 평균 RGB값 구하기
         skinresult[0] = (avg_left[0] + avg_right[0]) / 2; //R
         skinresult[1] = (avg_left[1] + avg_right[1]) / 2; //G
         skinresult[2] = (avg_left[2] + avg_right[2]) / 2; //B
@@ -281,17 +327,15 @@ public class skindetection extends AppCompatActivity
         createskin(filter_image.getNativeObjAddr(),skinresult);
 
 
-        loading.setText("입술색 추출 진행중...");
 
-        //각 볼의 평균 lab값 구하기
+        //아랫 입술의 평균 lab값 구하기
         //avg_top = avgBGR(top_lip.getNativeObjAddr());
         avg_bottom = avgBGR(bottom_lip.getNativeObjAddr());
-        //두 볼의 평균 lab값 구하기
+        //아랫 입술의 평균 lab값 구하기
         lipresult[0] = avg_bottom[0]; //R
         lipresult[1] = avg_bottom[1]; //G
         lipresult[2] = avg_bottom[2]; //B
         Log.d("native-lib ::: lipresult ","" + lipresult[0]+ " "+lipresult[1]+ " " +lipresult[2]);
-
         createskin(temp_image.getNativeObjAddr(),lipresult);
 
     }

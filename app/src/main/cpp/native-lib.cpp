@@ -19,6 +19,8 @@ using namespace std;
 using namespace cv;
 using namespace dlib;
 
+
+
 void balance_white(cv::Mat mat) {
     double discard_ratio = 0.05;
     int hists[3][256];
@@ -70,8 +72,8 @@ void balance_white(cv::Mat mat) {
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_realmakeup_autoimageprocessing_autowhitebalancingprocessing(JNIEnv *env, jobject thiz,
-                                                                       jlong input_image,
-                                                                       jlong output_image) {
+                                                                             jlong input_image,
+                                                                             jlong output_image) {
     // TODO: implement autowhitebalancingprocessing()
 
 
@@ -82,7 +84,7 @@ Java_com_example_realmakeup_autoimageprocessing_autowhitebalancingprocessing(JNI
     cvtColor(img_input,img_output,COLOR_BGRA2BGR);
     Mat result;
     balance_white(img_output);
-   // img_output = result.clone();
+    // img_output = result.clone();
 }
 
 
@@ -90,7 +92,7 @@ Java_com_example_realmakeup_autoimageprocessing_autowhitebalancingprocessing(JNI
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_realmakeup_skindetection_Detect(JNIEnv *env, jobject thiz,jlong input_image, jlong right_cheek,jlong left_cheek,jint name) {
+Java_com_example_realmakeup_skindetection_Detect(JNIEnv *env, jobject thiz,jlong input_image,jlong input2_image, jlong right_cheek,jlong left_cheek,jlong bottom_lip) {
     // TODO: implement Detect()
     __android_log_print(ANDROID_LOG_DEBUG, "native-lib :: ",
                         "start");
@@ -101,9 +103,16 @@ Java_com_example_realmakeup_skindetection_Detect(JNIEnv *env, jobject thiz,jlong
 
         frontal_face_detector detector = get_frontal_face_detector();
         Mat &img_input = *(Mat *) input_image;
+        Mat &img_input2 = *(Mat *) input2_image;
+
+
         Mat &cheek_right = *(Mat *) right_cheek;
         Mat &cheek_left = *(Mat *) left_cheek;
+        Mat &lip_bottom = *(Mat *) bottom_lip;
+
+
         cvtColor(img_input,img_input,COLOR_RGB2BGR);
+        cvtColor(img_input2,img_input2,COLOR_RGB2BGR);
         // And we also need a shape_predictor.  This is the tool that will predict face
         // landmark positions given an image and face bounding box.  Here we are just
         // loading the model from the shape_predictor_68_face_landmarks.dat file you gave
@@ -117,56 +126,50 @@ Java_com_example_realmakeup_skindetection_Detect(JNIEnv *env, jobject thiz,jlong
         dlib::array2d<dlib::rgb_pixel> img;
         dlib::assign_image(img, dlib::cv_image<rgb_pixel>(img_input));
         //dlib::cv_image<dlib::rgb_pixel> img(img_input);
-        __android_log_print(ANDROID_LOG_DEBUG, "native-lib :: ",
-                            "facename : %d",name);
+
+        //얼굴 인식중
         std::vector<dlib::rectangle> dets = detector(img);
 
         __android_log_print(ANDROID_LOG_DEBUG, "native-lib :: ",
                             "dets size : %d",(int)dets.size());
         std::vector<dlib::full_object_detection> shapes;
-        if(name == 1){
-            for (unsigned long j = 0; j < dets.size(); ++j) {
-                dlib::full_object_detection shape = sp(img, dets[j]);
-                //좌측볼
-                __android_log_print(ANDROID_LOG_DEBUG, "native-lib :: ",
-                                    " skin");
-                auto right_cheek_x1 = shape.part(5).x();
-                auto right_cheek_x2 = shape.part(6).x();
-                unsigned long right_cheek_width = right_cheek_x2 - right_cheek_x1;
-                auto right_cheek_y1 = shape.part(30).y();
-                auto right_cheek_y2 = shape.part(34).y();
-                unsigned long right_cheek_height = right_cheek_y2 - right_cheek_y1;
-                Rect roi1(right_cheek_x1, right_cheek_y1, right_cheek_width,right_cheek_height);
-                cheek_right = img_input(roi1);
 
-                //우측볼
-                auto left_cheek_x1 = shape.part(10).x();
-                auto left_cheek_x2 = shape.part(11).x();
-                unsigned long left_cheek_width = left_cheek_x2 - left_cheek_x1;
-                auto left_cheek_y1 = shape.part(30).y();
-                auto left_cheek_y2 = shape.part(34).y();
-                unsigned long left_cheek_height = left_cheek_y2 - left_cheek_y1;
-                Rect roi2(left_cheek_x1, left_cheek_y1, left_cheek_width, left_cheek_height);
-                cheek_left = img_input(roi2);
-            }
-        }
-        else{
-            for (unsigned long j = 0; j < dets.size(); ++j) {
-                dlib::full_object_detection shape = sp(img, dets[j]);
-                __android_log_print(ANDROID_LOG_DEBUG, "native-lib :: ",
-                                    "lip");
-                //아래입술
-                auto left_cheek_x1 = shape.part(67).x();
-                auto left_cheek_x2 = shape.part(65).x();
-                unsigned long left_cheek_width = left_cheek_x2 - left_cheek_x1;
-                auto left_cheek_y1 = shape.part(65).y();
-                auto left_cheek_y2 = shape.part(56).y();
-                unsigned long left_cheek_height = left_cheek_y2 - left_cheek_y1;
-                Rect roi2(left_cheek_x1, left_cheek_y1, left_cheek_width, left_cheek_height);
-                cheek_left = img_input(roi2);
-            }
-        }
+        for (unsigned long j = 0; j < dets.size(); ++j) {
+            dlib::full_object_detection shape = sp(img, dets[j]);
+            //좌측볼
+            __android_log_print(ANDROID_LOG_DEBUG, "native-lib :: ",
+                                " skin");
+            auto right_cheek_x1 = shape.part(5).x();
+            auto right_cheek_x2 = shape.part(6).x();
+            unsigned long right_cheek_width = right_cheek_x2 - right_cheek_x1;
+            auto right_cheek_y1 = shape.part(30).y();
+            auto right_cheek_y2 = shape.part(34).y();
+            unsigned long right_cheek_height = right_cheek_y2 - right_cheek_y1;
+            Rect roi1(right_cheek_x1, right_cheek_y1, right_cheek_width,right_cheek_height);
+            cheek_right = img_input(roi1);
 
+            //우측볼
+            auto left_cheek_x1 = shape.part(10).x();
+            auto left_cheek_x2 = shape.part(11).x();
+            unsigned long left_cheek_width = left_cheek_x2 - left_cheek_x1;
+            auto left_cheek_y1 = shape.part(30).y();
+            auto left_cheek_y2 = shape.part(34).y();
+            unsigned long left_cheek_height = left_cheek_y2 - left_cheek_y1;
+            Rect roi2(left_cheek_x1, left_cheek_y1, left_cheek_width, left_cheek_height);
+            cheek_left = img_input(roi2);
+
+            __android_log_print(ANDROID_LOG_DEBUG, "native-lib :: ",
+                                "lip");
+            //아래입술
+            auto bottom_lip_x1 = shape.part(66).x() ;
+            auto bottom_lip_x2 = shape.part(65).x();
+            unsigned long bottom_lip_width = bottom_lip_x2 - bottom_lip_x1;
+            auto bottom_lip_y1 = shape.part(55).y();
+            auto bottom_lip_y2 = shape.part(56).y();
+            unsigned long bottom_lip_height = bottom_lip_y2 - bottom_lip_y1;
+            Rect roi3(bottom_lip_x1, bottom_lip_y1, 1, 1);
+            lip_bottom = img_input2(roi3);
+        }
     }
     catch(exception& e){
         cout << "\nexception thrown!" << endl;
@@ -201,8 +204,8 @@ Java_com_example_realmakeup_skindetection_avgBGR(JNIEnv *env, jobject thiz, jlon
     avgBGR[0] = avgBGR[0] / (cheek_right.rows *cheek_right.cols); //R
     avgBGR[1] = avgBGR[1] / (cheek_right.rows *cheek_right.cols); //G
     avgBGR[2] = avgBGR[2] / (cheek_right.rows *cheek_right.cols); //B
-    __android_log_print(ANDROID_LOG_DEBUG, "native-lib :: ",
-                        "R : %ull, G : %ull, B : %ull",(unsigned long long)avgBGR[0],(unsigned long long)avgBGR[1],(unsigned long long)avgBGR[2]);
+
+
     env->SetDoubleArrayRegion(avg_BGR,0,3,avgBGR);
     return avg_BGR;
 }
@@ -210,7 +213,7 @@ Java_com_example_realmakeup_skindetection_avgBGR(JNIEnv *env, jobject thiz, jlon
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_realmakeup_skindetection_createskin(JNIEnv *env, jobject thiz, jlong output,
-                                               jdoubleArray result) {
+                                                     jdoubleArray result) {
     Mat &image = *(Mat *) output;
 
     jdouble* ptr;
@@ -221,7 +224,6 @@ Java_com_example_realmakeup_skindetection_createskin(JNIEnv *env, jobject thiz, 
     /*
     Mat skinimage(image.rows,image.cols,CV_8UC3,Scalar(0,0,0));
     cvtColor(skinimage,skinimage,COLOR_BGR2Lab);
-
     for (int y = 0; y < skinimage.rows; y++)
     {
         for (int x = 0; x < skinimage.cols; x++)
@@ -232,7 +234,6 @@ Java_com_example_realmakeup_skindetection_createskin(JNIEnv *env, jobject thiz, 
             double b = result[2];
         }
     }
-
     cvtColor(skinimage,image,COLOR_Lab2BGR);
      */
 }
