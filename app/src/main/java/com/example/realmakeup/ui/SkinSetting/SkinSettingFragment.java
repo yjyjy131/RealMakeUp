@@ -35,7 +35,6 @@ public class SkinSettingFragment extends Fragment {
         skinSettingViewModel =
                 ViewModelProviders.of(this).get(SkinSettingViewModel.class);
         View root = inflater.inflate(R.layout.fragment_skin_setting, container, false);
-
         env_spinner = (Spinner)root.findViewById(R.id.spinner);
         adapter_env = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_env, android.R.layout.simple_spinner_dropdown_item);
         env_spinner.setAdapter(adapter_env);
@@ -51,6 +50,7 @@ public class SkinSettingFragment extends Fragment {
 
 
         Button Button1 = (Button)root.findViewById(R.id.autobutton);
+
         Button1.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 get_env();

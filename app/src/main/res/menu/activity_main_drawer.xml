@@ -25,6 +25,10 @@
                 android:id="@+id/nav_skin"
                 android:icon="@drawable/ic_menu_share"
                 android:title="피부색 설정" />
+            <item
+                android:id="@+id/nav_color"
+                android:icon="@drawable/ic_menu_share"
+                android:title="퍼스널 칼라 진단" />
         </menu>
     </item>
 </menu>

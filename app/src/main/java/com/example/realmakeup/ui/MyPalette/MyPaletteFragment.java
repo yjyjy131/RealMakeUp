@@ -91,7 +91,8 @@ public class MyPaletteFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     lipAdapter.resetItem(); // 중복 방지
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        final String product_key = ds.getKey();
+                        StringTokenizer stringTokenizer = new StringTokenizer(ds.getKey(), "\\");
+                        final String product_key = stringTokenizer.nextToken();
                         String brand = ds.child("brand").getValue().toString();
                         final String detail_key = ds.child("colorKey").getValue().toString();
                         lip_list.add(product_key);
@@ -139,7 +140,8 @@ public class MyPaletteFragment extends Fragment {
                     shadowAdapter.resetItem();
                     //lipAdapter.resetItem(); // 중복 방지
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        final String product_key = ds.getKey();
+                        StringTokenizer stringTokenizer = new StringTokenizer(ds.getKey(), "\\");
+                        final String product_key = stringTokenizer.nextToken();
                         final String detail_key = ds.child("colorKey").getValue().toString();
                         String brand = ds.child("brand").getValue().toString();
                         Log.d("brand: ", brand);
