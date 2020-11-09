@@ -3,6 +3,7 @@ package com.example.realmakeup
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.ar.core.ArCoreApk
@@ -29,16 +30,22 @@ class MakeupActivity : AppCompatActivity() {
             return
         }
 
+        val textureIntent = intent
+        textureIntent.getIntExtra("textureid", R.drawable.makeup)
+
+        var textureId :Int = textureIntent.getIntExtra("textureid", R.drawable.makeup);
+
         setContentView(R.layout.activity_makeup)
         arFragment = face_fragment as FaceArFragment
         Texture.builder()
-                .setSource(this, R.drawable.makeup)
+                .setSource(this, textureId)
                 .build()
                 .thenAccept { texture -> faceMeshTexture = texture }
 
         val sceneView = arFragment.arSceneView
         sceneView.cameraStreamRenderPriority = Renderable.RENDER_PRIORITY_FIRST
         val scene = sceneView.scene
+
 
         scene.addOnUpdateListener {
             faceMeshTexture.let {

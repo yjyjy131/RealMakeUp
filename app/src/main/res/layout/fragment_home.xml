@@ -179,15 +179,9 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/arCamera_btn"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.2"
-            android:layout_margin="7dp"
-            android:background="@drawable/ic_menu_camera"
-            android:backgroundTint="@color/colorAccent" />
+        <View
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/my_palette_btn"
