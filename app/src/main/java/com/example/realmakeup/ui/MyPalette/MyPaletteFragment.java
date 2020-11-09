@@ -1,5 +1,6 @@
 package com.example.realmakeup.ui.MyPalette;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.realmakeup.MakeupActivity;
 import com.example.realmakeup.R;
 import com.example.realmakeup.ui.ItemList.Dialog_Item;
 import com.example.realmakeup.ui.ItemList.product_Adapter;
@@ -44,6 +46,7 @@ public class MyPaletteFragment extends Fragment {
     private FirebaseUser userAuth = mAuth.getCurrentUser();
     StringTokenizer stringTokenizer = new StringTokenizer(userAuth.getEmail(), "@");
     String user_id = stringTokenizer.nextToken();
+    String detail_key;
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference ref = firebaseDatabase.getReference();
@@ -71,13 +74,21 @@ public class MyPaletteFragment extends Fragment {
         lip_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                String textureInfo = "lip0n" + detail_key;
+                int textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
+                Intent intent = new Intent(getActivity(), MakeupActivity.class);
+                intent.putExtra("textureid", textureId);
+                startActivity(intent);
             }
         });
         shadow_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                String textureInfo = "eye0n" + detail_key;
+                int textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
+                Intent intent = new Intent(getActivity(), MakeupActivity.class);
+                intent.putExtra("textureid", textureId);
+                startActivity(intent);
             }
         });
 
@@ -142,7 +153,7 @@ public class MyPaletteFragment extends Fragment {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         StringTokenizer stringTokenizer = new StringTokenizer(ds.getKey(), "\\");
                         final String product_key = stringTokenizer.nextToken();
-                        final String detail_key = ds.child("colorKey").getValue().toString();
+                        detail_key = ds.child("colorKey").getValue().toString();
                         String brand = ds.child("brand").getValue().toString();
                         Log.d("brand: ", brand);
                         shadow_list.add(product_key);
