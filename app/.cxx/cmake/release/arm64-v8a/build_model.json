@@ -5,9 +5,9 @@
     "environmentVariables": []
   },
   "cmake": {
-    "cmakeArtifactsBaseFolder": "C:\\RealMakeUp\\app\\.cxx\\cmake\\release\\arm64-v8a",
-    "cmakeServerLogFile": "C:\\RealMakeUp\\app\\.cxx\\cmake\\release\\arm64-v8a\\cmake_server_log.txt",
-    "cmakeWrappingBaseFolder": "C:\\RealMakeUp\\app\\.cxx\\cxx\\release\\arm64-v8a",
+    "cmakeArtifactsBaseFolder": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app\\.cxx\\cmake\\release\\arm64-v8a",
+    "cmakeServerLogFile": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app\\.cxx\\cmake\\release\\arm64-v8a\\cmake_server_log.txt",
+    "cmakeWrappingBaseFolder": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app\\.cxx\\cxx\\release\\arm64-v8a",
     "effectiveConfiguration": {
       "name": "traditional-android-studio-cmake-environment",
       "description": "Composite reified CMakeSettings configuration",
@@ -15,9 +15,9 @@
       "inheritEnvironments": [
         "ndk"
       ],
-      "buildRoot": "C:\\RealMakeUp\\app\\.cxx\\cmake\\release\\arm64-v8a",
-      "cmakeToolchain": "C:\\Users\\yoenj\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\build\\cmake\\android.toolchain.cmake",
-      "cmakeExecutable": "C:\\Users\\yoenj\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\cmake.exe",
+      "buildRoot": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app\\.cxx\\cmake\\release\\arm64-v8a",
+      "cmakeToolchain": "C:\\Users\\ychoi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\build\\cmake\\android.toolchain.cmake",
+      "cmakeExecutable": "C:\\Users\\ychoi\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\cmake.exe",
       "variables": [
         {
           "name": "CMAKE_CXX_FLAGS",
@@ -25,7 +25,7 @@
         },
         {
           "name": "CMAKE_FIND_ROOT_PATH",
-          "value": "C:\\RealMakeUp\\app\\.cxx\\cmake\\release\\prefab\\arm64-v8a\\prefab"
+          "value": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app\\.cxx\\cmake\\release\\prefab\\arm64-v8a\\prefab"
         },
         {
           "name": "CMAKE_BUILD_TYPE",
@@ -33,7 +33,7 @@
         },
         {
           "name": "CMAKE_TOOLCHAIN_FILE",
-          "value": "C:\\Users\\yoenj\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\build\\cmake\\android.toolchain.cmake"
+          "value": "C:\\Users\\ychoi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\build\\cmake\\android.toolchain.cmake"
         },
         {
           "name": "ANDROID_ABI",
@@ -41,7 +41,7 @@
         },
         {
           "name": "ANDROID_NDK",
-          "value": "C:\\Users\\yoenj\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669"
+          "value": "C:\\Users\\ychoi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462"
         },
         {
           "name": "ANDROID_PLATFORM",
@@ -53,7 +53,7 @@
         },
         {
           "name": "CMAKE_ANDROID_NDK",
-          "value": "C:\\Users\\yoenj\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669"
+          "value": "C:\\Users\\ychoi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462"
         },
         {
           "name": "CMAKE_EXPORT_COMPILE_COMMANDS",
@@ -61,11 +61,11 @@
         },
         {
           "name": "CMAKE_LIBRARY_OUTPUT_DIRECTORY",
-          "value": "C:\\RealMakeUp\\app\\build\\intermediates\\cmake\\release\\obj\\arm64-v8a"
+          "value": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app\\build\\intermediates\\cmake\\release\\obj\\arm64-v8a"
         },
         {
           "name": "CMAKE_MAKE_PROGRAM",
-          "value": "C:\\Users\\yoenj\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe"
+          "value": "C:\\Users\\ychoi\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe"
         },
         {
           "name": "CMAKE_SYSTEM_NAME",
@@ -86,20 +86,21 @@
       ]
     }
   },
-  "cxxBuildFolder": "C:\\RealMakeUp\\app\\.cxx\\cmake\\release\\arm64-v8a",
+  "cxxBuildFolder": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app\\.cxx\\cmake\\release\\arm64-v8a",
   "info": {
     "abi": "ARM64_V8A",
     "bitness": 64,
     "deprecated": false,
     "default": true
   },
-  "originalCxxBuildFolder": "C:\\RealMakeUp\\app\\.cxx\\cmake\\release\\arm64-v8a",
+  "originalCxxBuildFolder": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app\\.cxx\\cmake\\release\\arm64-v8a",
   "variant": {
     "buildSystemArgumentList": [
       "-DANDROID_STL\u003dc++_shared",
       "-DANDROID_TOOLCHAIN\u003dclang"
     ],
     "buildTargetSet": [],
+    "implicitBuildTargetSet": [],
     "cFlagsList": [],
     "cmakeSettingsConfiguration": "android-gradle-plugin-predetermined-name",
     "cppFlagsList": [
@@ -109,24 +110,24 @@
     "module": {
       "buildSystem": "CMAKE",
       "cmake": {
-        "cmakeExe": "C:\\Users\\yoenj\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\cmake.exe",
+        "cmakeExe": "C:\\Users\\ychoi\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\cmake.exe",
         "minimumCmakeVersion": "3.10.2",
-        "ninjaExe": "C:\\Users\\yoenj\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe"
+        "ninjaExe": "C:\\Users\\ychoi\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe"
       },
-      "cmakeToolchainFile": "C:\\Users\\yoenj\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\build\\cmake\\android.toolchain.cmake",
-      "cxxFolder": "C:\\RealMakeUp\\app\\.cxx",
+      "cmakeToolchainFile": "C:\\Users\\ychoi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\build\\cmake\\android.toolchain.cmake",
+      "cxxFolder": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app\\.cxx",
       "gradleModulePathName": ":app",
-      "intermediatesFolder": "C:\\RealMakeUp\\app\\build\\intermediates",
-      "makeFile": "C:\\RealMakeUp\\app\\src\\main\\cpp\\CMakeLists.txt",
-      "moduleBuildFile": "C:\\RealMakeUp\\app\\build.gradle",
-      "moduleRootFolder": "C:\\RealMakeUp\\app",
+      "intermediatesFolder": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app\\build\\intermediates",
+      "makeFile": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app\\src\\main\\cpp\\CMakeLists.txt",
+      "moduleBuildFile": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app\\build.gradle",
+      "moduleRootFolder": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app",
       "ndkDefaultAbiList": [
         "ARMEABI_V7A",
         "ARM64_V8A",
         "X86",
         "X86_64"
       ],
-      "ndkFolder": "C:\\Users\\yoenj\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669",
+      "ndkFolder": "C:\\Users\\ychoi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462",
       "ndkMetaAbiList": [
         {
           "abi": "ARMEABI_V7A",
@@ -181,37 +182,37 @@
         "X86_64"
       ],
       "ndkDefaultStl": "LIBCXX_STATIC",
-      "ndkVersion": "21.0.6113669",
+      "ndkVersion": "21.1.6352462",
       "project": {
-        "compilerSettingsCacheFolder": "C:\\RealMakeUp\\.cxx",
-        "cxxFolder": "C:\\RealMakeUp\\.cxx",
+        "compilerSettingsCacheFolder": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\.cxx",
+        "cxxFolder": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\.cxx",
         "isBuildOnlyTargetAbiEnabled": true,
         "isCmakeBuildCohabitationEnabled": false,
         "isNativeCompilerSettingsCacheEnabled": false,
-        "rootBuildGradleFolder": "C:\\RealMakeUp",
-        "sdkFolder": "C:\\Users\\yoenj\\AppData\\Local\\Android\\Sdk",
+        "rootBuildGradleFolder": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp",
+        "sdkFolder": "C:\\Users\\ychoi\\AppData\\Local\\Android\\Sdk",
         "isPrefabEnabled": false
       },
       "splitsAbiFilterSet": [],
       "stlSharedObjectMap": {
         "LIBCXX_SHARED": {
-          "ARMEABI_V7A": "C:\\Users\\yoenj\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\arm-linux-androideabi\\libc++_shared.so",
-          "ARM64_V8A": "C:\\Users\\yoenj\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\aarch64-linux-android\\libc++_shared.so",
-          "X86": "C:\\Users\\yoenj\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\i686-linux-android\\libc++_shared.so",
-          "X86_64": "C:\\Users\\yoenj\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\x86_64-linux-android\\libc++_shared.so"
+          "ARMEABI_V7A": "C:\\Users\\ychoi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\arm-linux-androideabi\\libc++_shared.so",
+          "ARM64_V8A": "C:\\Users\\ychoi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\aarch64-linux-android\\libc++_shared.so",
+          "X86": "C:\\Users\\ychoi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\i686-linux-android\\libc++_shared.so",
+          "X86_64": "C:\\Users\\ychoi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\x86_64-linux-android\\libc++_shared.so"
         },
         "LIBCXX_STATIC": {},
         "NONE": {},
         "SYSTEM": {}
       }
     },
-    "objFolder": "C:\\RealMakeUp\\app\\build\\intermediates\\cmake\\release\\obj",
+    "objFolder": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app\\build\\intermediates\\cmake\\release\\obj",
     "variantName": "release",
     "validAbiList": [
       "ARM64_V8A"
     ],
-    "prefabDirectory": "C:\\RealMakeUp\\app\\.cxx\\cmake\\release\\prefab",
+    "prefabDirectory": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app\\.cxx\\cmake\\release\\prefab",
     "prefabPackageDirectoryList": []
   },
-  "prefabFolder": "C:\\RealMakeUp\\app\\.cxx\\cmake\\release\\prefab\\arm64-v8a"
+  "prefabFolder": "C:\\Users\\ychoi\\AndroidStudioProjects\\RealMakeUp\\app\\.cxx\\cmake\\release\\prefab\\arm64-v8a"
 }
