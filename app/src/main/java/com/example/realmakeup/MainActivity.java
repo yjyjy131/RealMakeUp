@@ -1,5 +1,6 @@
 package com.example.realmakeup;
 
+import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -21,6 +22,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,6 +53,20 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+    /*
+    DB의 화장품 색상 rgb값으로 봄/여름/가을/겨울 톤 구분
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // 메뉴를 클릭했을 때의 이벤트 처리
+        switch (item.getItemId()) {
+            case R.id.action_db_settings :
+                Intent intent = new Intent(MainActivity.this, setColorDBActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return true; // 내가 이벤트 처리를 완료함
+    }
+     */
 
     @Override
     public boolean onSupportNavigateUp() {

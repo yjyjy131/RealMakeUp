@@ -111,7 +111,6 @@ public class Dialog_Item {
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 스피너 아이템 셀렉 오류
                 int num = (int) detail_prod_spinner.getSelectedItemId();
                 // String detail_RGB = colorRGBList.get(num);  // RGB 색상 값
                 Log.d("Spinner Color Select :  ", String.valueOf(num));

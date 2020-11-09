@@ -6,4 +6,10 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_db_settings"
+        android:orderInCategory="100"
+        android:title="DB 등록"
+        app:showAsAction="never" />
 </menu>
