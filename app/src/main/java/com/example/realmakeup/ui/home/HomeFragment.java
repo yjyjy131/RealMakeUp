@@ -20,6 +20,7 @@ import com.example.realmakeup.MakeupActivity;
 import com.example.realmakeup.R;
 //import com.example.realmakeup.ui.ItemList.ItemListFragment;
 //import com.example.realmakeup.ui.MyPalette.MyPaletteFragment;
+import com.example.realmakeup.ui.MyPalette.MyPaletteFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -29,10 +30,9 @@ public class HomeFragment extends Fragment {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     Button list_btn;
     Button palette_btn;
-    Button arCamera_btn;
+    //Button arCamera_btn;
     String email = user.getEmail();
 
-    // 각각의 Fragment마다 Instance를 반환해 줄 메소드를 생성
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
         final TextView textView = root.findViewById(R.id.text_home);
         list_btn = root.findViewById(R.id.item_list_btn);
         palette_btn = root.findViewById(R.id.my_palette_btn);
-        arCamera_btn = root.findViewById(R.id.arCamera_btn);
+        //arCamera_btn = root.findViewById(R.id.arCamera_btn);
 
         list_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,17 +58,16 @@ public class HomeFragment extends Fragment {
         palette_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
             }
         });
 
-        arCamera_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent((getActivity()), MakeupActivity.class);
-                startActivity(intent);
-            }
-        });
+//        arCamera_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent((getActivity()), MakeupActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         homeViewModel.getText().observe(this, new Observer<String>() {
             @Override
