@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="피부색 추출"
+            android:text="피부색 확인 선택"
             android:textColor="#E91E63"
             android:textSize="36sp"
             android:textStyle="bold" />

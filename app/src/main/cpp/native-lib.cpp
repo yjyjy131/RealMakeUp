@@ -205,7 +205,7 @@ Java_com_example_realmakeup_skindetection_avgBGR(JNIEnv *env, jobject thiz, jlon
     avgBGR[1] = avgBGR[1] / (cheek_right.rows *cheek_right.cols); //G
     avgBGR[2] = avgBGR[2] / (cheek_right.rows *cheek_right.cols); //B
 
-    
+
     env->SetDoubleArrayRegion(avg_BGR,0,3,avgBGR);
     return avg_BGR;
 }
@@ -224,7 +224,6 @@ Java_com_example_realmakeup_skindetection_createskin(JNIEnv *env, jobject thiz, 
     /*
     Mat skinimage(image.rows,image.cols,CV_8UC3,Scalar(0,0,0));
     cvtColor(skinimage,skinimage,COLOR_BGR2Lab);
-
     for (int y = 0; y < skinimage.rows; y++)
     {
         for (int x = 0; x < skinimage.cols; x++)
@@ -235,7 +234,6 @@ Java_com_example_realmakeup_skindetection_createskin(JNIEnv *env, jobject thiz, 
             double b = result[2];
         }
     }
-
     cvtColor(skinimage,image,COLOR_Lab2BGR);
      */
 }

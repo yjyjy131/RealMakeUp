@@ -140,6 +140,7 @@ public class skindetection extends AppCompatActivity
 
         SkinHex = (TextView)findViewById(R.id.skinHex);
         LipHex = (TextView)findViewById(R.id.lipHex);
+        final ProgressDialog mDialog = new ProgressDialog(this);
 
 
 
@@ -153,7 +154,12 @@ public class skindetection extends AppCompatActivity
             }
         });
 
-
+        Button complete = findViewById(R.id.complete);
+        complete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     // < >안에 들은 자료형은 순서대로 doInBackground, onProgressUpdate, onPostExecute의 매개변수 자료형을 뜻한다.(내가 사용할 매개변수타입을 설정하면된다)
@@ -179,6 +185,10 @@ public class skindetection extends AppCompatActivity
         //이 Task에서(즉 이 스레드에서) 수행되던 작업이 종료되었을 때 호출됨
         protected void onPostExecute(Integer result) {
 
+
+            double[] CVS = new double[3];
+            CVS = cmyk(skinresult[0], skinresult[1], skinresult[2]);
+            int personal_code = color_test((int)CVS[0], (int)CVS[1], (int)CVS[2]);
             //색상 코드
             SkinHex.setText(String.format("#%02X%02X%02X",(int)skinresult[2],(int)skinresult[1],(int)skinresult[0]));
             LipHex.setText(String.format("#%02X%02X%02X",(int)lipresult[2],(int)lipresult[1],(int)lipresult[0]));
@@ -189,16 +199,12 @@ public class skindetection extends AppCompatActivity
             Utils.matToBitmap(filter_image, bitmapOutput);
             skinimage.setImageBitmap(bitmapOutput);
             // imageview 둥글게 만들기
-            skinimage.setBackground(new ShapeDrawable(new OvalShape()));
-            skinimage.setClipToOutline(true);
 
 
             //lip이미지에 넣기
             bitmapOutput = Bitmap.createBitmap(temp_image.cols(), temp_image.rows(), Bitmap.Config.ARGB_8888);
             Utils.matToBitmap(temp_image, bitmapOutput);
             lipimage.setImageBitmap(bitmapOutput);
-            lipimage.setBackground(new ShapeDrawable(new OvalShape()));
-            lipimage.setClipToOutline(true);
 
 
             //로딩화면 가리고, 피부색과 입술색 추출하기
@@ -207,10 +213,11 @@ public class skindetection extends AppCompatActivity
             liplayout.setVisibility(View.VISIBLE);
 
 
-            // 피부색과 입술색의 정볼르 사용자 정보 등록
+            // 피부색과 입술색의 정보를 사용자 정보 등록
             String skin = String.format("#%02X%02X%02X",(int)skinresult[2],(int)skinresult[1],(int)skinresult[0]);
             String lip = String.format("#%02X%02X%02X",(int)lipresult[2],(int)lipresult[1],(int)lipresult[0]);
-            register_user_info(skin, lip);
+            // 사용자 정보 등록
+            register_user_info(skin, lip, personal_code);
         }
 
         //Task가 취소되었을때 호출
@@ -218,11 +225,88 @@ public class skindetection extends AppCompatActivity
             loading.setText("얼굴 인식 실패");
         }
     }
-
-
-    public native void Detect(long faceimage,long lipimagem,long right,long left,long bottom);
+    public native void Detect(long faceimage,long lipimage,long right,long left,long bottom);
     public native double[] avgBGR(long cheek);
     public native void createskin(long output, double result[]);
+
+    // 퍼스널 칼라 진단을 위해 rgb -> C, V, S
+    public double[] cmyk(double R, double G, double B){
+        double c = 1 - R / 255;
+        double m = 1 - G / 255;
+        double y = 1 - B / 255;
+        double min_c = Math.min(c, m);
+        double max_c = Math.max(c, m);
+        min_c = Math.min(min_c, y);
+        max_c = Math.max(max_c, y);
+        c = (c-min_c) / (1-min_c);
+        double v = max_c;
+        double s = (max_c-min_c) / max_c;
+
+        double[] result = new double[3];
+        result[0] = c*100;
+        result[1] = v*100;
+        result[2] = s*100;
+        return result;
+    }
+
+    int color_test(int C, int V, int S){
+        if (C<20){
+            // Warm 톤
+            if (V < 30){
+                // Spring
+                if (S < 50){
+                    // Spring Light
+                    return 0;
+                }
+                else {
+                    // Spring Bright
+                    return 1;
+                }
+            }
+            else{
+                // Autumn
+                if (S < 50){
+                    // Autumn mute
+                    return 2;
+                }
+                else {
+                    // Autumn deep
+                    return 3;
+                }
+            }
+        }
+        else{
+            // Cool 톤
+            if (V < 70){
+                // Spring
+                if (S < 50){
+                    if (V < 30){
+                        // Summer Bright
+                        return 4;
+                    }
+                    else{
+                        // Summer mute
+                        return 5;
+                    }
+                }
+                else {
+                    // Summer Light
+                    return 6;
+                }
+            }
+            else{
+                // Winter
+                if (S < 50){
+                    // winter mute
+                    return 7;
+                }
+                else {
+                    // winter deep
+                    return 8;
+                }
+            }
+        }
+    }
 
     public void skincolor_extraction(){
         double[] avg_right = new double[3];
@@ -256,8 +340,7 @@ public class skindetection extends AppCompatActivity
 
     }
 
-    // 이 함수 쓰는곳 어디임?
-    public void register_user_info(String skinRGB, String lipRGB){
+    public void register_user_info(String skinRGB, String lipRGB, int personal_code){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         String email = user.getEmail();
@@ -265,7 +348,7 @@ public class skindetection extends AppCompatActivity
         String id = stringTokenizer.nextToken(); //@ 분리
 
         DatabaseReference colorRef = database.getReference("User").child(id).child("skinColor").child(env);
-        ColorModel colorinfo = new ColorModel(skinRGB, lipRGB);
+        ColorModel colorinfo = new ColorModel(skinRGB, lipRGB, personal_code);
         colorRef.setValue(colorinfo);
     }
 }

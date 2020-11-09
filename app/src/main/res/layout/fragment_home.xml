@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="12dp"
+    android:layout_margin="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -40,38 +40,132 @@
         android:textSize="18sp"
         android:text="고객님의 맞춤 추천 상품을 확인하세요 :)"/>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginBottom="15dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
         android:background="@drawable/listview"
-        android:layout_weight="0.45"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/skin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/listview"
-        android:layout_weight="0.45"
-        android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/skinimage"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="20dp"
+                android:layout_weight="0.5"
+                app:srcCompat="@drawable/ic_image" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.25"
+                android:gravity="center"
+                android:textColor="@color/colorAccent"
+                android:text="맞춤 퍼스널 Color"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/skinHex"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.25"
+                android:gravity="center"
+                android:text="#00000"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/lip"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/lipimage"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="20dp"
+                android:layout_weight="0.5"
+                app:srcCompat="@drawable/ic_image"/>
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.25"
+                android:gravity="center"
+                android:textColor="@color/colorAccent"
+                android:text="나의 팔레트 Color"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/lipHex"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="#000000"
+                android:textSize="18sp"
+                android:layout_weight="0.25" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/home_title_shadow"
+        android:layout_weight="0.004"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="나만의 맞춤 추천 제품"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_weight="0.7"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="horizontal">
+
+        <GridView
+            android:id="@+id/home_shadow"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/listview"
+            android:layout_gravity="center_horizontal"
+            android:numColumns="1"
+            android:layout_marginRight="5dp"/>
+
+        <GridView
+            android:id="@+id/home_lip"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/listview"
+            android:layout_gravity="center_horizontal"
+            android:numColumns="1"
+            android:layout_marginLeft="5dp"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center_vertical"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
-        android:layout_weight="0.1"
+        android:layout_weight="0.08"
         android:orientation="horizontal">
 
         <Button
@@ -85,15 +179,9 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/arCamera_btn"
-            android:layout_width="0dp"
-            android:layout_height="68dp"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="7dp"
-            android:layout_weight="0.2"
-            android:background="@drawable/ic_menu_camera"
-            android:backgroundTint="@color/colorAccent" />
+        <View
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/my_palette_btn"

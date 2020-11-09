@@ -61,40 +61,43 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="0.4"
-            android:background="#ffffff"
             android:gravity="center"
             android:text="취소"
             android:textColor="#000000"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:background="#ffffff"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#000000" />
 
         <Button
             android:id="@+id/cameraButton"
-            android:layout_width="41dp"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
             android:layout_weight="0.2"
-            android:background="@drawable/ic_image_removebg_preview__8_"
-            android:backgroundTint="@color/colorAccent"
             android:gravity="center"
             android:textColor="#000000"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:background="@drawable/ic_menu_camera"
+            android:backgroundTint="@color/colorAccent" />
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <View
+            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-        </LinearLayout>
+            android:background="#000000" />
 
         <Button
             android:id="@+id/paletteButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="0.4"
-            android:background="#FFFFFF"
             android:gravity="center"
             android:text="팔레트 추가"
             android:textColor="#000000"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:background="#ffffff"/>
     </LinearLayout>
 
     <View
