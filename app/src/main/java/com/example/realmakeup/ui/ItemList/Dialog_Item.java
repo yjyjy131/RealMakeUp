@@ -8,19 +8,15 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.realmakeup.MainActivity;
 import com.example.realmakeup.MakeupActivity;
 import com.example.realmakeup.R;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class Dialog_Item {
@@ -43,9 +38,10 @@ public class Dialog_Item {
     StringTokenizer stringTokenizer = new StringTokenizer(userAuth.getEmail(), "@");
     String user_id = stringTokenizer.nextToken();
 
-    ArrayList<String> colorRGBList = new ArrayList<String>();
-    ArrayList<String> colorNameList = new ArrayList<String>();
-    ArrayList<String> colorKeyList = new ArrayList<String>();
+    ArrayList<String> colorRGBList = new ArrayList<String>(); // 색상 코드
+    ArrayList<String> colorNameList = new ArrayList<String>(); // 색상명
+    ArrayList<String> colorKeyList = new ArrayList<String>(); // 접근 키
+
 
     public Dialog_Item(Context context) {
         this.context = context;
@@ -57,9 +53,9 @@ public class Dialog_Item {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.child("colorCode").getChildren()) {
                     String detail_key = ds.getKey();
-                    Log.d("key",detail_key);
+                    Log.d("key datasnapshot",detail_key);
                     String prod_color = ds.getValue().toString();    // RGB 색상값
-                    Log.d("color",prod_color);
+                    Log.d("color datasnapshot",prod_color);
                     colorRGBList.add(prod_color);
                 }
                 for (DataSnapshot ds : dataSnapshot.child("colorName").getChildren()) {
@@ -68,7 +64,9 @@ public class Dialog_Item {
                     colorNameList.add(prod_name);
                     colorKeyList.add(detail_key);
                 }
+                for (String name : colorNameList) Log.d("Spinner", "name: " + name);
             }
+
             @Override
             public void onCancelled (@NonNull DatabaseError databaseError){
             }
@@ -90,7 +88,6 @@ public class Dialog_Item {
         // 커스텀 다이얼로그를 노출한다.
         dlg.show();
 
-
         // 커스텀 다이얼로그의 각 위젯들을 정의한다.
         final Button paletteButton = (Button) dlg.findViewById(R.id.paletteButton);
         final Button cameraButton = (Button) dlg.findViewById(R.id.cameraButton);
@@ -99,22 +96,25 @@ public class Dialog_Item {
 
         // 스피너 정보를 가져온다.
         get_spinner_info(brand, item, product_key);
+        //onDataChange();
+
+        // colorNameList 비어있음
+        //Log.d("Spinner colornamelist :  ", colorNameList.get(0));
+        for (String name : colorNameList) Log.d("Spinner Check", "name: " + name);
 
         final ArrayAdapter<String> adapter_detail = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, colorNameList);
         adapter_detail.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        //Spinner spinner = new Spinner(context);
+        //spinner.setAdapter(adapter_detail);
+
         detail_prod_spinner.setAdapter(adapter_detail);
 
-        for (int i = 0; i < colorNameList.size(); i++){
-            Log.d("Spinner colornamelist :  ", colorNameList.get(i));
-            adapter_detail.add(colorNameList.get(i));
-        }
-
-        adapter_detail.notifyDataSetChanged();
+        //adapter_detail.notifyDataSetChanged();
 
         detail_prod_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                Log.d("Spinner Color Select aaa :  ", String.valueOf(position));
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -136,7 +136,11 @@ public class Dialog_Item {
 
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User");
                 if (item.equals("shadows")) {
-
+                    String textureInfo = "eye" +  product_Num + "n" + num;
+                    int textureId = context.getResources().getIdentifier(textureInfo, "drawable", context.getPackageName());
+                    Intent intent = new Intent(context, MakeupActivity.class);
+                    intent.putExtra("textureid", textureId);
+                    context.startActivity(intent);
                 } else if (item.equals("lips")) {
                     String textureInfo = "lip" +  product_Num + "n" + num;
                     int textureId = context.getResources().getIdentifier(textureInfo, "drawable", context.getPackageName());
@@ -180,3 +184,11 @@ public class Dialog_Item {
         });
     }
 }
+
+
+
+
+
+
+
+
