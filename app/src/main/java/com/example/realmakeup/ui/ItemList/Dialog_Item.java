@@ -41,36 +41,8 @@ public class Dialog_Item {
     StringTokenizer stringTokenizer = new StringTokenizer(userAuth.getEmail(), "@");
     String user_id = stringTokenizer.nextToken();
 
-    ArrayList<String> colorRGBList = new ArrayList<String>();
-    ArrayList<String> colorNameList = new ArrayList<String>();
-    ArrayList<String> colorKeyList = new ArrayList<String>();
-
     public Dialog_Item(Context context) {
         this.context = context;
-    }
-
-    public void get_spinner_info(String brand, String item, String prod_key){
-        datebaseReference.child(brand).child(item).child(prod_key).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.child("colorCode").getChildren()) {
-                    String detail_key = ds.getKey();
-                    Log.d("key",detail_key);
-                    String prod_color = ds.getValue().toString();    // RGB 색상값
-                    Log.d("color",prod_color);
-                    colorRGBList.add(prod_color);
-                }
-                for (DataSnapshot ds : dataSnapshot.child("colorName").getChildren()) {
-                    String detail_key = ds.getKey();
-                    String prod_name = ds.getValue().toString();    // 세부 제품명
-                    colorNameList.add(prod_name);
-                    colorKeyList.add(detail_key);
-                }
-            }
-            @Override
-            public void onCancelled (@NonNull DatabaseError databaseError){
-            }
-        });
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
@@ -96,11 +68,34 @@ public class Dialog_Item {
         final Spinner detail_prod_spinner = (Spinner) dlg.findViewById(R.id.detail_prod);
 
         // 스피너 정보를 가져온다.
-        get_spinner_info(brand, item, product_key);
+        ArrayList<String> colorRGBList = new ArrayList<String>();
+        ArrayList<String> colorNameList = new ArrayList<String>();
+        ArrayList<String> colorKeyList = new ArrayList<String>();
 
-        final ArrayAdapter<String> adapter_detail = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, colorNameList);
+        ArrayAdapter<String> adapter_detail = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, colorNameList);
         adapter_detail.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         detail_prod_spinner.setAdapter(adapter_detail);
+
+        datebaseReference.child(brand).child(item).child(product_key).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.child("colorCode").getChildren()) {
+                    String prod_color = ds.getValue().toString();    // RGB 색상값
+                    colorRGBList.add(prod_color);
+                }
+                for (DataSnapshot ds : dataSnapshot.child("colorName").getChildren()) {
+                    String detail_key = ds.getKey();
+                    String prod_name = ds.getValue().toString();    // 세부 제품명
+                    colorNameList.add(prod_name);
+                    colorKeyList.add(detail_key);
+                }
+                adapter_detail.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled (@NonNull DatabaseError databaseError){
+            }
+        });
+
         detail_prod_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -136,12 +131,12 @@ public class Dialog_Item {
 
                 PaletteModel paletteModel = new PaletteModel(brand, product_key, detail_key, detail_RGB);
                 if (item.equals("shadows")) {
-                    databaseReference.child(user_id).child("paletteEyes").child(product_key).setValue(paletteModel);
-                    Toast.makeText(context, "\"" + product_name+ "\" 을 나의 팔레트에 추가하였습니다.", Toast.LENGTH_SHORT).show();
+                    databaseReference.child(user_id).child("paletteEyes").child(product_key+"\\"+detail_key).setValue(paletteModel);
+                    Toast.makeText(context, "\"" + product_name+ " - " + detail_name+ "\" 을 나의 팔레트에 추가하였습니다.", Toast.LENGTH_SHORT).show();
                     dlg.dismiss();
                 } else if (item.equals("lips")) {
-                    databaseReference.child(user_id).child("paletteLips").child(product_key).setValue(paletteModel);
-                    Toast.makeText(context, "\"" + product_name+ "\" 을 나의 팔레트에 추가하였습니다.", Toast.LENGTH_SHORT).show();
+                    databaseReference.child(user_id).child("paletteLips").child(product_key+"\\"+detail_key).setValue(paletteModel);
+                    Toast.makeText(context, "\"" + product_name+ " - " + detail_name+ "\" 을 나의 팔레트에 추가하였습니다.", Toast.LENGTH_SHORT).show();
                     dlg.dismiss();
                 }
             }
