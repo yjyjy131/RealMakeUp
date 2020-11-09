@@ -77,6 +77,7 @@ public class ItemListFragment extends Fragment {
         brand_cate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("Spinner selecetd : ",String.valueOf(i));
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -119,7 +120,7 @@ public class ItemListFragment extends Fragment {
                 String product_name = singleItem.getName();
 
                 Dialog_Item dialog_item = new Dialog_Item(getActivity());
-                dialog_item.callFunction(brand, item, product_name, product_key);
+                dialog_item.callFunction(brand, item, product_name, product_key, i);
             }
         });
 

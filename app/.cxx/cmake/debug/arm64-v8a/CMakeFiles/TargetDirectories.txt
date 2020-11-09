@@ -1,3 +1,3 @@
-C:/Users/ys_71/AndroidStudioProjects/RealMakeUp/app/.cxx/cmake/debug/arm64-v8a/CMakeFiles/native-lib.dir
-C:/Users/ys_71/AndroidStudioProjects/RealMakeUp/app/.cxx/cmake/debug/arm64-v8a/CMakeFiles/edit_cache.dir
-C:/Users/ys_71/AndroidStudioProjects/RealMakeUp/app/.cxx/cmake/debug/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/RealMakeUp/app/.cxx/cmake/debug/arm64-v8a/CMakeFiles/native-lib.dir
+C:/RealMakeUp/app/.cxx/cmake/debug/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/RealMakeUp/app/.cxx/cmake/debug/arm64-v8a/CMakeFiles/rebuild_cache.dir
