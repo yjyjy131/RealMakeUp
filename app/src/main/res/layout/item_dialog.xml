@@ -77,11 +77,11 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="0.2"
+            android:background="@drawable/ic_image_removebg_preview__8_"
+            android:backgroundTint="@color/colorAccent"
             android:gravity="center"
             android:textColor="#000000"
-            android:textSize="16dp"
-            android:background="@drawable/ic_menu_camera"
-            android:backgroundTint="@color/colorAccent" />
+            android:textSize="16dp" />
 
         <View
             android:layout_width="1dp"

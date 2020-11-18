@@ -164,7 +164,7 @@ Java_com_example_realmakeup_skindetection_Detect(JNIEnv *env, jobject thiz,jlong
             auto bottom_lip_x1 = shape.part(66).x() ;
             auto bottom_lip_x2 = shape.part(65).x();
             unsigned long bottom_lip_width = bottom_lip_x2 - bottom_lip_x1;
-            auto bottom_lip_y1 = shape.part(55).y();
+            auto bottom_lip_y1 = shape.part(59).y();
             auto bottom_lip_y2 = shape.part(56).y();
             unsigned long bottom_lip_height = bottom_lip_y2 - bottom_lip_y1;
             Rect roi3(bottom_lip_x1, bottom_lip_y1, 1, 1);
