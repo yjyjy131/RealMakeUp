@@ -179,9 +179,17 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
 
-        <View
-            android:layout_width="10dp"
-            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/arCamera_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.4"
+            android:background="@drawable/white_btn"
+            android:text="aaa"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/my_palette_btn"
