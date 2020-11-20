@@ -75,6 +75,7 @@ public class MyPaletteFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String textureInfo = "lip0n" + detail_key;
+                Log.d("texture",textureInfo);
                 int textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
                 Intent intent = new Intent(getActivity(), MakeupActivity.class);
                 intent.putExtra("textureid", textureId);
