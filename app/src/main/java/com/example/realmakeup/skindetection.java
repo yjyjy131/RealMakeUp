@@ -143,34 +143,46 @@ public class skindetection extends AppCompatActivity
         final ProgressDialog mDialog = new ProgressDialog(this);
 
 
-
+        Button mainbutton = findViewById(R.id.mainbutton);
+        mainbutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Button extract = (Button)findViewById(R.id.extraction);
         extract.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //백그라운드 작업 (Asyntask)
-                task = new BackgroundTask();
-                task.execute();
+                try{
+                    task = new BackgroundTask();
+                    task.execute();
+                }
+                catch(Exception e){
+                    loading.setText("피부색 추출 실패" + "\n" + "선명한 사진으로 다시 시도해주세요.");
+                }
             }
         });
 
         Button complete = findViewById(R.id.complete);
         complete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(getApplicationContext(), com.example.realmakeup.MainActivity.class);
+                startActivity(intent);
             }
         });
     }
 
     // < >안에 들은 자료형은 순서대로 doInBackground, onProgressUpdate, onPostExecute의 매개변수 자료형을 뜻한다.(내가 사용할 매개변수타입을 설정하면된다)
-    class BackgroundTask extends AsyncTask<Void , Integer , Integer> {
+    class BackgroundTask extends AsyncTask<Void , Void , Void> {
         //초기화 단계에서 사용한다. 초기화관련 코드를 작성했다.
         protected void onPreExecute() {
             loading.setText("피부색 추출 중 ...");
+
         }
 
         //스레드의 백그라운드 작업 구현
-        protected Integer doInBackground(Void... voids) {
+        protected Void doInBackground(Void... voids) {
             //피부색 추출
             skincolor_extraction();
             return null;
@@ -178,12 +190,12 @@ public class skindetection extends AppCompatActivity
 
         //UI작업 관련 작업 (백그라운드 실행중 이 메소드를 통해 UI작업을 할 수 있다)
         //publishProgress(value)의 value를 값으로 받는다.values는 배열이라 여러개 받기가능
-        protected void onProgressUpdate(Integer ... values) {
+        protected void onProgressUpdate(Void ... voids) {
         }
 
 
         //이 Task에서(즉 이 스레드에서) 수행되던 작업이 종료되었을 때 호출됨
-        protected void onPostExecute(Integer result) {
+        protected void onPostExecute(Void voids) {
 
 
             double[] CVS = new double[3];
