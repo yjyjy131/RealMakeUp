@@ -38,6 +38,7 @@ class MakeupActivity : AppCompatActivity() {
 
         val scene = sceneView.scene
 
+
         scene.addOnUpdateListener {
             val faceList = sceneView.session!!.getAllTrackables(AugmentedFace::class.java)
              // 새로운 Make  AugmentedFaceNodes 생성
@@ -46,41 +47,30 @@ class MakeupActivity : AppCompatActivity() {
                     val faceNode = AugmentedFaceNode(face)
                     faceNode.setParent(scene)
 
-//                    // xml imageView 이용해 빌드
+//                    // xml imageView 이용해 빌드 - 컬러 틴트
 //                    ViewRenderable.builder().setView(this, R.layout.texture).build()
 //                            .thenAccept {
 //                                val default_texture = Node()
 //                                val localPosition = Vector3()
-//                                //lift the light bulb to be just above your head.
-//                                localPosition.set(0.0f, -0.1f, 0.0f)
+//                                localPosition.set(0.0f, 0.05f, 0.01f)
 //                                default_texture.localPosition = localPosition
 //                                default_texture.setParent(faceNode)
 //                                default_texture.renderable = it
 //                            }
 
                     // png 이미지로 빌드
-//                    Texture.builder()
-//                            .setSource(this, R.drawable.makeup)
-//                            .build()
-//                            .thenAccept { texture ->
-//                                faceNode.faceMeshTexture = texture
-//                            }
-//                    faceNodeMap[face] = faceNode
+                    Texture.builder()
+                            .setSource(this, R.drawable.eye0n0)
+                            .build()
+                            .thenAccept { texture ->
+                                faceNode.faceMeshTexture = texture
+                            }
+                    faceNodeMap[face] = faceNode
+
                 }
             }
 
-            // Remove any AugmentedFaceNodes associated with an AugmentedFace that stopped tracking.
-            val faceIterator = faceNodeMap.entries.iterator()
-            while (faceIterator.hasNext()) {
-                val entry = faceIterator.next()
-                val face = entry.key
-                if (face.trackingState == TrackingState.STOPPED) {
-                    val faceNode = entry.value
-                    faceNode.setParent(null)
-                    faceNode.children.clear()
-                    faceIterator.remove()
-                }
-            }
+
         }
 
 
