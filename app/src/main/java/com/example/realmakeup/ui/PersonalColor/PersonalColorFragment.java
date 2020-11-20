@@ -232,8 +232,9 @@ public class PersonalColorFragment extends Fragment {
                 set_color(244, 211, 218, colorimage5);
                 set_color(232, 164, 185, colorimage6);
                 set_color(234, 186, 174, colorimage7);
-                set_color(144, 146, 161, colorimage8);
+                set_color(244, 146, 161, colorimage8);
                 break;
+
             case 7:
                 color_cate.setText("\'겨울 브라이트\' 입니다.");
                 set_color(204, 72, 145, colorimage1);

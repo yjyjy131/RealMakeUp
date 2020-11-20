@@ -75,12 +75,11 @@
         <Button
             android:id="@+id/cameraButton"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_margin="5dp"
+            android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:background="@drawable/ic_image_removebg_preview__8_"
-            android:backgroundTint="@color/colorAccent"
             android:gravity="center"
-            android:textColor="#000000"
+            android:background="@drawable/camera" />
             android:textSize="16dp" />
 
         <View
