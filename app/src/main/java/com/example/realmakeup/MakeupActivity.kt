@@ -93,7 +93,7 @@ class MakeupActivity : AppCompatActivity() {
         //갤러리 버튼 기능
         val gallery_btn = findViewById<Button>(R.id.gallery_btn)
         gallery_btn.setOnClickListener(){
-            val intent = Intent(Intent.ACTION_VIEW,Uri.parse("content://media/internal/images/media"))
+            val intent = Intent(Intent.ACTION_VIEW,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(intent,1)
         }
         ////////////////
@@ -133,7 +133,7 @@ class MakeupActivity : AppCompatActivity() {
             values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
             values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000)
             values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
-            values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/test_pictures")
+            values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/ARMakeUp")
             values.put(MediaStore.Images.Media.IS_PENDING, true)
             values.put(MediaStore.Images.Media.DISPLAY_NAME, "img_${SystemClock.uptimeMillis()}")
 
@@ -147,7 +147,7 @@ class MakeupActivity : AppCompatActivity() {
             }
         } else {
             val directory =
-                    File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + separator + "AR Makeup File")
+                    File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + separator + "RealMakeUp")
             if (!directory.exists()) {
                 directory.mkdirs()
             }
