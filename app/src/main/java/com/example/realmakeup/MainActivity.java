@@ -5,9 +5,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.realmakeup.ui.SkinSetting.SkinSettingFragment;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.os.Debug;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,11 +27,21 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.widget.Toast;
+
+import java.util.StringTokenizer;
 
 import static androidx.navigation.fragment.NavHostFragment.findNavController;
 
@@ -35,7 +49,11 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     public SharedPreferences prefs;
-    Fragment fragment;
+
+    private FirebaseAuth mAuth = null;
+    private FirebaseUser userAuth = null;
+    private DatabaseReference mDatabase;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +112,41 @@ public class MainActivity extends AppCompatActivity {
 
     // 앱 처음 실행시 피부 등록
     public void checkFirstRun() {
-        boolean isFirstRun = prefs.getBoolean("isFirstRun", true);
-        if (isFirstRun) {
-            // DB 조회, 피부색 코드 NULL 인 경우 프래그먼트 띄우기
-            moveToSkinSetting();
-            prefs.edit().putBoolean("isFirstRun", false).apply();
-        }
+        //boolean isFirstRun = prefs.getBoolean("isFirstRun", true);
+
+        // DB 조회, 피부색 코드 NULL check
+        mAuth = FirebaseAuth.getInstance();
+        userAuth = mAuth.getCurrentUser();
+
+        StringTokenizer strToken = new StringTokenizer(userAuth.getEmail(), "@");
+        String user_id = strToken.nextToken();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("User").child(user_id).child("skinColor").child("bright_inside")
+                .child("skinCode").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            String mySkinCode = dataSnapshot.getValue().toString();
+                            Log.d("피부코드 존재", mySkinCode);
+                        } else {
+                            moveToSkinSetting();
+                            //prefs.edit().putBoolean("isFirstRun", false).apply();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                }
+        );
+
+//        if (isFirstRun) {
+//            moveToSkinSetting();
+//            prefs.edit().putBoolean("isFirstRun", false).apply();
+//        }
+
     }
 
     public void moveToSkinSetting(){

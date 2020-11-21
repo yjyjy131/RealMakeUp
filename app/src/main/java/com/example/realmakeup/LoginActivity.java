@@ -101,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) { //update ui code here
         if (user != null) {
             Intent intent = new Intent(this, MainActivity.class);
+            //intent.putExtra("loginChk", true);
             startActivity(intent);
             finish();
         }
