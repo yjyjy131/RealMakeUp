@@ -11,24 +11,24 @@
 
         <item
             android:id="@+id/nav_item"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_baseline_search_24"
             android:title="@string/menu_item" />
 
         <item
             android:id="@+id/nav_palette"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_baseline_palette_24"
             android:title="@string/menu_palette" />
     </group>
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_skin"
-                android:icon="@drawable/ic_menu_share"
-                android:title="피부색 설정" />
-            <item
                 android:id="@+id/nav_color"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_baseline_person_search_24"
                 android:title="퍼스널 칼라 진단" />
+            <item
+                android:id="@+id/nav_skin"
+                android:icon="@drawable/ic_baseline_settings_24"
+                android:title="피부색 설정" />
         </menu>
     </item>
 </menu>

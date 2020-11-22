@@ -57,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
             }
         });
+
+
     }
     // [START signin]
     private void signIn() {
@@ -88,8 +90,19 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+//
+//                            boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
+//                            Log.d("로그인정보", "onComplete: " + (isNew ? "new user" : "old user"));
+//                            if (isNew){
+//                                // 피부 세팅 프래그먼트 이동
+//                            } else {
+//                                FirebaseUser user = mAuth.getCurrentUser();
+//                                updateUI(user);
+//                            }
+
                         } else {
                             // If sign in fails, display a message to the user.
                             updateUI(null);
@@ -101,7 +114,6 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) { //update ui code here
         if (user != null) {
             Intent intent = new Intent(this, MainActivity.class);
-            //intent.putExtra("loginChk", true);
             startActivity(intent);
             finish();
         }

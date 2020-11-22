@@ -2,6 +2,8 @@ package com.example.realmakeup;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import com.example.realmakeup.ui.SkinSetting.SkinSettingFragment;
@@ -39,6 +41,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.StringTokenizer;
@@ -53,7 +57,11 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth = null;
     private FirebaseUser userAuth = null;
     private DatabaseReference mDatabase;
-    
+
+    // Main Drawer 정보
+    TextView loginInfo;
+    TextView skinInfo;
+    ImageView skinInfoImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +84,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        View headerView = navigationView.getHeaderView(0);
+        loginInfo = (TextView) headerView.findViewById(R.id.loginInfo);
+        skinInfo = (TextView) headerView.findViewById(R.id.mySkinCode);
+        skinInfoImg = (ImageView) headerView.findViewById(R.id.mySkinImg);
 
         checkFirstRun();
 
@@ -109,44 +122,16 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-
     // 앱 처음 실행시 피부 등록
     public void checkFirstRun() {
-        //boolean isFirstRun = prefs.getBoolean("isFirstRun", true);
-
-        // DB 조회, 피부색 코드 NULL check
-        mAuth = FirebaseAuth.getInstance();
-        userAuth = mAuth.getCurrentUser();
-
-        StringTokenizer strToken = new StringTokenizer(userAuth.getEmail(), "@");
-        String user_id = strToken.nextToken();
-
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("User").child(user_id).child("skinColor").child("bright_inside")
-                .child("skinCode").addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()){
-                            String mySkinCode = dataSnapshot.getValue().toString();
-                            Log.d("피부코드 존재", mySkinCode);
-                        } else {
-                            moveToSkinSetting();
-                            //prefs.edit().putBoolean("isFirstRun", false).apply();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                }
-        );
-
-//        if (isFirstRun) {
-//            moveToSkinSetting();
-//            prefs.edit().putBoolean("isFirstRun", false).apply();
-//        }
-
+        // db 체크 없이 실행
+        boolean isFirstRun = prefs.getBoolean("isFirstRun", true);
+        if (isFirstRun) {
+            moveToSkinSetting();
+            prefs.edit().putBoolean("isFirstRun", false).apply();
+        } else {
+           drawerSkinCode();
+        }
     }
 
     public void moveToSkinSetting(){
@@ -160,6 +145,38 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         navController.navigate(R.id.action_nav_home_to_nav_skin, bundle, navOptions);
+    }
+
+    public void drawerSkinCode(){
+        mAuth = FirebaseAuth.getInstance();
+        userAuth = mAuth.getCurrentUser();
+
+        StringTokenizer strToken = new StringTokenizer(userAuth.getEmail(), "@");
+        String user_id = strToken.nextToken();
+        loginInfo.setText(user_id);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("User").child(user_id).child("skinColor").child("bright_inside")
+                .child("skinCode").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            String mySkinCode = dataSnapshot.getValue().toString();
+                            //Log.d("피부코드 존재", mySkinCode);
+                            skinInfo.setText(mySkinCode);
+                            skinInfoImg.setColorFilter(Color.parseColor(mySkinCode), PorterDuff.Mode.SRC);
+                        } else {
+                            moveToSkinSetting();
+                            //prefs.edit().putBoolean("isFirstRun", false).apply();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                }
+        );
     }
 
 }
