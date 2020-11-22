@@ -1,8 +1,12 @@
 package com.example.realmakeup.ui.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +28,15 @@ import com.example.realmakeup.ui.MyPalette.MyPaletteFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     Button list_btn;
     Button palette_btn;
-    //Button arCamera_btn;
+    Button arCamera_btn;
     String email = user.getEmail();
 
     public static HomeFragment newInstance() {
@@ -42,11 +48,16 @@ public class HomeFragment extends Fragment {
 
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
+
+//        Context context = getActivity();
+//        prefs = context.getSharedPreferences("Pref", MODE_PRIVATE);
+//        checkFirstRun();
+
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
         list_btn = root.findViewById(R.id.item_list_btn);
         palette_btn = root.findViewById(R.id.my_palette_btn);
-        //arCamera_btn = root.findViewById(R.id.arCamera_btn);
+        arCamera_btn = root.findViewById(R.id.arCamera_btn);
 
         list_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,13 +72,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
-//        arCamera_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent((getActivity()), MakeupActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        arCamera_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent((getActivity()), MakeupActivity.class);
+                startActivity(intent);
+            }
+        });
 
         homeViewModel.getText().observe(this, new Observer<String>() {
             @Override
@@ -77,4 +88,5 @@ public class HomeFragment extends Fragment {
         });
         return root;
     }
+
 }
