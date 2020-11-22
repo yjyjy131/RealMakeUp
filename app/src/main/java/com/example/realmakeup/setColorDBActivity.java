@@ -20,6 +20,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class setColorDBActivity extends Activity {
 
     private Button btn;
@@ -51,13 +55,12 @@ public class setColorDBActivity extends Activity {
                                         String detail_key = ds.getKey();
                                         tv.setText("상세 키값: "+detail_key);
 
-                                        double[] CVS = new double[3];
                                         int r = Integer.valueOf( colorStr.substring( 1, 3 ), 16 );
                                         int g = Integer.valueOf( colorStr.substring( 3, 5 ), 16 );
                                         int b = Integer.valueOf( colorStr.substring( 5, 7 ), 16 );
-                                        CVS = cmyk(r, g, b);
-                                        int personal_code = color_test((int)CVS[0], (int)CVS[1], (int)CVS[2]);
-                                        Ref.child(Integer.toString(personal_code)).child(key+"\\"+detail_key).setValue(key+"#"+detail_key);
+                                        int code_idx = lip_color_test(r, g, b);
+                                        char personal_code = getcode(code_idx);
+                                        Ref.child(String.valueOf(personal_code)).child(key+"\\"+detail_key).setValue(key+"\\"+detail_key);
                                     }
                                 }
                                 @Override
@@ -86,13 +89,12 @@ public class setColorDBActivity extends Activity {
                                         String detail_key = ds.getKey();
                                         tv.setText("상세 키값: "+detail_key);
 
-                                        double[] CVS = new double[3];
                                         int r = Integer.valueOf( colorStr.substring( 1, 3 ), 16 );
                                         int g = Integer.valueOf( colorStr.substring( 3, 5 ), 16 );
                                         int b = Integer.valueOf( colorStr.substring( 5, 7 ), 16 );
-                                        CVS = cmyk(r, g, b);
-                                        int personal_code = color_test((int)CVS[0], (int)CVS[1], (int)CVS[2]);
-                                        Ref2.child(Integer.toString(personal_code)).child(key+"\\"+detail_key).setValue(key+"#"+detail_key);
+                                        int code_idx = eye_color_test(r, g, b);
+                                        char personal_code = getcode(code_idx);
+                                        Ref2.child(String.valueOf(personal_code)).child(key+"\\"+detail_key).setValue(key+"\\"+detail_key);
                                     }
                                 }
                                 @Override
@@ -109,83 +111,169 @@ public class setColorDBActivity extends Activity {
         });
     }
 
-
-    // 퍼스널 칼라 진단을 위해 rgb -> C, V, S
-    public double[] cmyk(int R, int G, int B){
-        double c = 1 - R / 255;
-        double m = 1 - G / 255;
-        double y = 1 - B / 255;
-        double min_c = Math.min(c, m);
-        double max_c = Math.max(c, m);
-        min_c = Math.min(min_c, y);
-        max_c = Math.max(max_c, y);
-        c = (c-min_c) / (1-min_c);
-        double v = max_c;
-        double s = (max_c-min_c) / max_c;
-
-        double[] result = new double[3];
-        result[0] = c*100;
-        result[1] = v*100;
-        result[2] = s*100;
-        return result;
-    }
-
-    int color_test(int C, int V, int S){
-        if (C<20){
-            // Warm 톤
-            if (V < 30){
-                // Spring
-                if (S < 50){
-                    // Spring Light
-                    return 0;
-                }
-                else {
-                    // Spring Bright
-                    return 1;
-                }
-            }
-            else{
-                // Autumn
-                if (S < 50){
-                    // Autumn mute
-                    return 2;
-                }
-                else {
-                    // Autumn deep
-                    return 3;
-                }
-            }
+    char getcode(int idx){
+        if (idx < 4){ // 봄 라이트
+            return '0';
+        }
+        else if (idx < 8){ // 봄 브라이트
+            return '1';
+        }
+        else if (idx < 12){ // 가을 뮤트
+            return '2';
+        }
+        else if (idx <= 16){ // 가을 딥
+            return '3';
+        }
+        else if (idx <= 20){ // 여름 브라이트
+            return '4';
+        }
+        else if (idx <= 24){ // 여름 뮤트
+            return '5';
+        }
+        else if (idx <= 28){ // 여름 라이트
+            return '6';
+        }
+        else if (idx < 32){ // 겨울 뮤트
+            return '7';
+        }
+        else if (idx <= 36){ // 겨울 딥
+            return '8';
         }
         else{
-            // Cool 톤
-            if (V < 70){
-                // Spring
-                if (S < 50){
-                    if (V < 30){
-                        // Summer Bright
-                        return 4;
-                    }
-                    else{
-                        // Summer mute
-                        return 5;
-                    }
-                }
-                else {
-                    // Summer Light
-                    return 6;
-                }
-            }
-            else{
-                // Winter
-                if (S < 50){
-                    // winter mute
-                    return 7;
-                }
-                else {
-                    // winter deep
-                    return 8;
-                }
-            }
+            Log.d("error", "error");
+            return 0;
         }
     }
+
+    double cost(int R, int G, int B, int R_, int G_, int B_){
+        return Math.sqrt((R-R_)*(R-R_)) + Math.sqrt((G-G_)*(G-G_)) + Math.sqrt((B-B_)*(B-B_));
+    }
+
+    int lip_color_test(int R, int G, int B){
+        ArrayList<Double> listLip = new ArrayList<>();
+
+        // Lip
+        listLip.add(cost(R, G, B, 241, 56, 51));
+        listLip.add(cost(R, G, B, 242, 83, 64));
+        listLip.add(cost(R, G, B, 255, 134, 117));
+        listLip.add(cost(R, G, B, 252, 147, 115));
+
+        // Lip 21~24
+        listLip.add(cost(R, G, B, 231, 0, 44));
+        listLip.add(cost(R, G, B, 246, 54, 77));
+        listLip.add(cost(R, G, B, 254, 87, 105));
+        listLip.add(cost(R, G, B, 255, 99, 74));
+
+        // Lip 31~34 - 가을 뮤트
+        listLip.add(cost(R, G, B, 176, 90, 103));
+        listLip.add(cost(R, G, B, 157, 81, 94));
+        listLip.add(cost(R, G, B, 150, 69, 66));
+        listLip.add(cost(R, G, B, 141, 40, 56));
+
+        // Lip 41~44 - 가을 딥
+        listLip.add(cost(R, G, B, 219, 80, 77));
+        listLip.add(cost(R, G, B, 206, 93, 66));
+        listLip.add(cost(R, G, B, 152, 41, 51));
+        listLip.add(cost(R, G, B, 119, 47, 48));
+
+        // Lip 51~54 - 여름 브라이트
+        listLip.add(cost(R, G, B, 252, 0, 139));
+        listLip.add(cost(R, G, B, 255, 90, 150));
+        listLip.add(cost(R, G, B, 245, 119, 201));
+        listLip.add(cost(R, G, B, 255, 72, 178));
+
+        // Lip 61~64 - 여름 뮤트
+        listLip.add(cost(R, G, B, 166, 87, 116));
+        listLip.add(cost(R, G, B, 162, 90, 101));
+        listLip.add(cost(R, G, B, 172, 114, 136));
+        listLip.add(cost(R, G, B, 169, 76, 86));
+
+        // Lip 71~74 - 여름 라이트
+        listLip.add(cost(R, G, B, 218, 78, 113));
+        listLip.add(cost(R, G, B, 225, 84, 137));
+        listLip.add(cost(R, G, B, 225, 90, 150));
+        listLip.add(cost(R, G, B, 254, 182, 219));
+
+        // Lip 81~84 - 겨울 브라이트
+        listLip.add(cost(R, G, B, 204, 72, 145));
+        listLip.add(cost(R, G, B, 217, 61, 134));
+        listLip.add(cost(R, G, B, 213, 103, 137));
+        listLip.add(cost(R, G, B, 223, 103, 151));
+
+        // Lip 91~94 - 겨울 딥
+        listLip.add(cost(R, G, B, 190, 76, 125));
+        listLip.add(cost(R, G, B, 175, 57, 107));
+        listLip.add(cost(R, G, B, 176, 43, 60));
+        listLip.add(cost(R, G, B, 141, 40, 56));
+
+        // 오차 최솟값 구하기
+        int Lipidx = listLip.indexOf(Collections.min(listLip));
+
+        return Lipidx;
+    }
+
+    int eye_color_test(int R, int G, int B){
+        ArrayList<Double> listEye = new ArrayList<>();
+
+        // Eye 11~14
+        listEye.add(cost(R, G, B, 252, 193, 163));
+        listEye.add(cost(R, G, B, 242, 204, 142));
+        listEye.add(cost(R, G, B, 227, 144, 100));
+        listEye.add(cost(R, G, B, 191, 125, 91));
+
+        // Eye 21~24
+        listEye.add(cost(R, G, B, 254, 222, 197));
+        listEye.add(cost(R, G, B, 249, 165, 131));
+        listEye.add(cost(R, G, B, 244, 105, 101));
+        listEye.add(cost(R, G, B, 103, 74, 78));
+
+        // Eye 31~34 - 가을 뮤트
+        listEye.add(cost(R, G, B, 234, 186, 174));
+        listEye.add(cost(R, G, B, 202, 137, 133));
+        listEye.add(cost(R, G, B, 106, 77, 69));
+        listEye.add(cost(R, G, B, 90, 66, 66));
+
+        // Eye 41~44 - 가을 딥
+        listEye.add(cost(R, G, B, 174, 137, 93));
+        listEye.add(cost(R, G, B, 165, 117, 95));
+        listEye.add(cost(R, G, B, 134, 100, 90));
+        listEye.add(cost(R, G, B, 104, 51, 45));
+
+        // Eye 51~54 - 여름 브라이트
+        listEye.add(cost(R, G, B, 232, 172, 157));
+        listEye.add(cost(R, G, B, 232, 98, 135));
+        listEye.add(cost(R, G, B, 136, 84, 97));
+        listEye.add(cost(R, G, B, 202, 62, 107));
+
+        // Eye 61~64 - 여름 뮤트
+        listEye.add(cost(R, G, B, 196, 139, 146));
+        listEye.add(cost(R, G, B, 198, 159, 152));
+        listEye.add(cost(R, G, B, 205, 169, 173));
+        listEye.add(cost(R, G, B, 228, 137, 144));
+
+        // Eye 71~74 - 여름 라이트
+        listEye.add(cost(R, G, B, 244, 211, 218));
+        listEye.add(cost(R, G, B, 232, 164, 185));
+        listEye.add(cost(R, G, B, 234, 186, 174));
+        listEye.add(cost(R, G, B, 244, 146, 161));
+
+        // Eye 81~84 - 겨울 브라이트
+        listEye.add(cost(R, G, B, 96, 71, 77));
+        listEye.add(cost(R, G, B, 136, 84, 97));
+        listEye.add(cost(R, G, B, 237, 183, 111));
+        listEye.add(cost(R, G, B, 135, 73, 88));
+
+        // Eye 91~94 - 겨울 딥
+        listEye.add(cost(R, G, B, 163, 99, 55));
+        listEye.add(cost(R, G, B, 103, 74, 78));
+        listEye.add(cost(R, G, B, 136, 71, 87));
+        listEye.add(cost(R, G, B, 64, 37, 56));
+
+        // 오차 최솟값 구하기
+        int Eyeidx = listEye.indexOf(Collections.min(listEye));
+
+        return Eyeidx;
+    }
+
+
 }
