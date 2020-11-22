@@ -9,104 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.AugmentedFace
 import com.google.ar.core.TrackingState
-import com.google.ar.sceneform.Node
-import com.google.ar.sceneform.math.Vector3
-import com.google.ar.sceneform.rendering.Renderable
-import com.google.ar.sceneform.rendering.Texture
-import com.google.ar.sceneform.rendering.ViewRenderable
-import com.google.ar.sceneform.ux.ArFragment
-import com.google.ar.sceneform.ux.AugmentedFaceNode
-import kotlinx.android.synthetic.main.activity_makeup.*
-import java.util.*
-
-class MakeupActivity : AppCompatActivity() {
-    private val MIN_OPENGL_VERSION = 3.0
-    private lateinit var arFragment: ArFragment
-    private val faceNodeMap = HashMap<AugmentedFace, AugmentedFaceNode>()
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_makeup)
-        if (!checkIsSupportedDeviceOrFinish())
-            return
-
-        arFragment = supportFragmentManager.findFragmentById(R.id.face_fragment) as ArFragment
-
-        val sceneView = arFragment.arSceneView
-        sceneView.cameraStreamRenderPriority = Renderable.RENDER_PRIORITY_FIRST
-
-        val scene = sceneView.scene
-
-
-        scene.addOnUpdateListener {
-            val faceList = sceneView.session!!.getAllTrackables(AugmentedFace::class.java)
-             // 새로운 Make  AugmentedFaceNodes 생성
-            for (face in faceList) {
-                if (!faceNodeMap.containsKey(face)) {
-                    val faceNode = AugmentedFaceNode(face)
-                    faceNode.setParent(scene)
-
-//                    // xml imageView 이용해 빌드 - 컬러 틴트
-//                    ViewRenderable.builder().setView(this, R.layout.texture).build()
-//                            .thenAccept {
-//                                val default_texture = Node()
-//                                val localPosition = Vector3()
-//                                localPosition.set(0.0f, 0.05f, 0.01f)
-//                                default_texture.localPosition = localPosition
-//                                default_texture.setParent(faceNode)
-//                                default_texture.renderable = it
-//                            }
-
-                    // png 이미지로 빌드
-                    Texture.builder()
-                            .setSource(this, R.drawable.eye0n0)
-                            .build()
-                            .thenAccept { texture ->
-                                faceNode.faceMeshTexture = texture
-                            }
-                    faceNodeMap[face] = faceNode
-
-                }
-            }
-
-
-        }
-
-
-    }
-
-    private fun checkIsSupportedDeviceOrFinish(): Boolean {
-        if (ArCoreApk.getInstance().checkAvailability(this) === ArCoreApk.Availability.UNSUPPORTED_DEVICE_NOT_CAPABLE) {
-            finish()
-            return false
-        }
-        val openGlVersionString = (getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager)
-                .deviceConfigurationInfo
-                .glEsVersion
-        if (java.lang.Double.parseDouble(openGlVersionString) < MIN_OPENGL_VERSION) {
-            finish()
-            return false
-        }
-        return true
-    }
-
-  }
-
-
-// ORIGINAL SOURCE CODE
-/*
-package com.example.realmakeup
-
-import android.app.ActivityManager
-import android.content.Context
-import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import com.google.ar.core.ArCoreApk
-import com.google.ar.core.AugmentedFace
-import com.google.ar.core.TrackingState
 import com.google.ar.sceneform.rendering.Renderable
 import com.google.ar.sceneform.rendering.Texture
 import com.google.ar.sceneform.ux.AugmentedFaceNode
@@ -195,4 +97,15 @@ class MakeupActivity : AppCompatActivity() {
         return true
     }
 }
-*/
+
+
+//                    // xml imageView 이용해 빌드 - 컬러 틴트
+//                    ViewRenderable.builder().setView(this, R.layout.texture).build()
+//                            .thenAccept {
+//                                val default_texture = Node()
+//                                val localPosition = Vector3()
+//                                localPosition.set(0.0f, 0.05f, 0.01f)
+//                                default_texture.localPosition = localPosition
+//                                default_texture.setParent(faceNode)
+//                                default_texture.renderable = it
+//                            }
