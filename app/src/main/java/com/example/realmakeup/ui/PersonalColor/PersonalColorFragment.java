@@ -45,7 +45,7 @@ public class PersonalColorFragment extends Fragment {
     TextView color_cate, color_code;
     ArrayAdapter<CharSequence> adapter_env;
     Button Button1;
-    FrameLayout colorimage1, colorimage2, colorimage3, colorimage4;
+    FrameLayout skinimage, colorimage1, colorimage2, colorimage3, colorimage4;
     FrameLayout colorimage5, colorimage6, colorimage7, colorimage8;
     LinearLayout colorlayout;
     int personal_code;
@@ -68,6 +68,7 @@ public class PersonalColorFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_personal_color, container, false);
 
         colorlayout = (LinearLayout)root.findViewById(R.id.color);
+        skinimage = (FrameLayout)root.findViewById(R.id.skinimage);
         colorimage1 = (FrameLayout)root.findViewById(R.id.colorimage1);
         colorimage2 = (FrameLayout)root.findViewById(R.id.colorimage2);
         colorimage3 = (FrameLayout)root.findViewById(R.id.colorimage3);
@@ -131,6 +132,11 @@ public class PersonalColorFragment extends Fragment {
                         }
                         if (ds.getKey().equals("skinCode")){
                             String hex = ds.getValue().toString();
+                            int r = Integer.valueOf( hex.substring( 1, 3 ), 16 );
+                            int g = Integer.valueOf( hex.substring( 3, 5 ), 16 );
+                            int b = Integer.valueOf( hex.substring( 5, 7 ), 16 );
+                            // 나의 피부색 색깔 보여주기
+                            set_color(r, g, b, skinimage);
                             color_code.setText("( 나의 피부색: " + hex + " )");
                         }
                     }
