@@ -2,11 +2,16 @@ package com.example.realmakeup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.realmakeup.ui.SkinSetting.SkinSettingFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -52,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
             }
         });
+
+
     }
     // [START signin]
     private void signIn() {
@@ -83,8 +90,19 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+//
+//                            boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
+//                            Log.d("로그인정보", "onComplete: " + (isNew ? "new user" : "old user"));
+//                            if (isNew){
+//                                // 피부 세팅 프래그먼트 이동
+//                            } else {
+//                                FirebaseUser user = mAuth.getCurrentUser();
+//                                updateUI(user);
+//                            }
+
                         } else {
                             // If sign in fails, display a message to the user.
                             updateUI(null);
