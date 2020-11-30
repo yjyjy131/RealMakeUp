@@ -82,4 +82,5 @@ public class SkinSettingFragment extends Fragment {
         else{
             env = "bright_inside";
         }
-    }}
+    }
+}
