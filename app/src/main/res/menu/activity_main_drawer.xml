@@ -18,6 +18,11 @@
             android:id="@+id/nav_palette"
             android:icon="@drawable/ic_baseline_palette_24"
             android:title="@string/menu_palette" />
+
+        <item
+            android:id="@+id/nav_user"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="사용자 설정" />
     </group>
     <item android:title="MY REAL SKIN">
         <menu>
