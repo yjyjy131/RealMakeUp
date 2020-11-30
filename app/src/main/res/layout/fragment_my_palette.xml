@@ -16,6 +16,7 @@
         android:textSize="18sp"
         android:textColor="@color/colorPrimary"
         android:text="당신에게 어울리는 컬러 조합을 확인하세요!"/>
+
     <TextView
         android:id="@+id/title_shadow"
         android:layout_weight="0.004"

@@ -41,7 +41,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,10 +65,14 @@ public class MainActivity extends AppCompatActivity {
     TextView loginInfo;
     TextView skinInfo;
     ImageView skinInfoImg;
+    Spinner spinner3;
+    String env;
+    ArrayAdapter<CharSequence> adapter_env;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         prefs = getSharedPreferences("Pref", MODE_PRIVATE);
 
@@ -89,8 +96,20 @@ public class MainActivity extends AppCompatActivity {
         loginInfo = (TextView) headerView.findViewById(R.id.loginInfo);
         skinInfo = (TextView) headerView.findViewById(R.id.mySkinCode);
         skinInfoImg = (ImageView) headerView.findViewById(R.id.mySkinImg);
+        spinner3 = (Spinner) headerView.findViewById(R.id.spinner3);
+        adapter_env = ArrayAdapter.createFromResource(this, R.array.spinner_env, android.R.layout.simple_spinner_dropdown_item);
+        spinner3.setAdapter(adapter_env);
+        adapter_env.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        checkFirstRun();
+                checkFirstRun();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
     }
 
@@ -130,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             moveToSkinSetting();
             prefs.edit().putBoolean("isFirstRun", false).apply();
         } else {
-           drawerSkinCode();
+            drawerSkinCode();
         }
     }
 
@@ -151,25 +170,38 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         userAuth = mAuth.getCurrentUser();
 
+        
+        String spinner_text = spinner3.getSelectedItem().toString();
+        if(spinner_text.equals("어두운 실내")){
+            env = "dark_inside";
+        }
+        else if (spinner_text.equals("실외")){
+            env = "outside";
+        }
+        else{
+            env = "bright_inside";
+        }
+
+
         StringTokenizer strToken = new StringTokenizer(userAuth.getEmail(), "@");
         String user_id = strToken.nextToken();
         loginInfo.setText(user_id);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("User").child(user_id).child("skinColor").child("bright_inside")
-                .child("skinCode").addListenerForSingleValueEvent(
+        mDatabase.child("User").child(user_id).child("skinColor").child(env).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()){
-                            String mySkinCode = dataSnapshot.getValue().toString();
-                            //Log.d("피부코드 존재", mySkinCode);
-                            skinInfo.setText(mySkinCode);
-                            skinInfoImg.setColorFilter(Color.parseColor(mySkinCode), PorterDuff.Mode.SRC);
-                        } else {
-                            moveToSkinSetting();
-                            //prefs.edit().putBoolean("isFirstRun", false).apply();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            if (ds.getKey().equals("skinCode")) {
+                                String mySkinCode = ds.getValue().toString();
+                                skinInfo.setText(mySkinCode);
+                                skinInfoImg.setColorFilter(Color.parseColor(mySkinCode), PorterDuff.Mode.SRC);
+                                Log.d("피부코드 존재", mySkinCode);
+                            }
+
                         }
+
                     }
 
                     @Override
@@ -177,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
     }
 
 }

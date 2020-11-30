@@ -69,6 +69,13 @@ public class autoimageprocessing extends AppCompatActivity {
             }
         });
 
+
+        Button skinsetting = (Button)findViewById(R.id.skinsetting);
+        skinsetting.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                finish();
+            }
+        });
         Button Apply = (Button)findViewById(R.id.applybutton);
         Apply.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){

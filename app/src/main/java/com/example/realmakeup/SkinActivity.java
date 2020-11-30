@@ -236,7 +236,12 @@ public class SkinActivity extends AppCompatActivity {
             }
         });
 
-
+        Button Button3 = (Button)findViewById(R.id.skinsetting);
+        Button3.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                finish();
+            }
+        });
 
     }
 

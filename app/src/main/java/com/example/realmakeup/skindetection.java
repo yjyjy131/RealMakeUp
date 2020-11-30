@@ -145,7 +145,7 @@ public class skindetection extends AppCompatActivity
 
         Button mainbutton = findViewById(R.id.mainbutton);
         mainbutton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            public void onClick(View v){
                 finish();
             }
         });
