@@ -49,7 +49,6 @@ public class MyPaletteFragment extends Fragment {
     private FirebaseUser userAuth = mAuth.getCurrentUser();
     StringTokenizer stringTokenizer = new StringTokenizer(userAuth.getEmail(), "@");
     String user_id = stringTokenizer.nextToken();
-    String detail_key;
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference ref = firebaseDatabase.getReference();
@@ -63,7 +62,7 @@ public class MyPaletteFragment extends Fragment {
         dualmakeup = (Button)root.findViewById(R.id.go_makeup_btn);
         dualmakeup.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                String textureInfo = "face1";
+                String textureInfo = "face2";
                 int textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
                 Intent intent = new Intent(getActivity(), MakeupActivity.class);
                 intent.putExtra("textureid", textureId);
@@ -87,24 +86,26 @@ public class MyPaletteFragment extends Fragment {
         lip_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //String textureInfo = "face1";
-                String textureInfo = "lip0n" + detail_key;
-                int textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
-                Intent intent = new Intent(getActivity(), MakeupActivity.class);
-                intent.putExtra("textureid", textureId);
-                startActivity(intent);
+                product_SingleItem singleItem = lipAdapter.getItem(i);
+                String product_key = singleItem.getProductKey();
+                String product_name = singleItem.getName();
+
+                Dialog_palette dialog_palette = new Dialog_palette(getActivity());
+                dialog_palette.callFunction("etude", "lips", product_name, product_key, i, lipAdapter);
+                lipAdapter.notifyDataSetChanged();
             }
         });
 
         shadow_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String textureInfo = "eye0n" + detail_key;
-                int textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
-                Intent intent = new Intent(getActivity(), MakeupActivity.class);
-                Log.d("textureid", String.valueOf(textureId));
-                intent.putExtra("textureid", textureId);
-                startActivity(intent);
+                product_SingleItem singleItem = shadowAdapter.getItem(i);
+                String product_key = singleItem.getProductKey();
+                String product_name = singleItem.getName();
+
+                Dialog_palette dialog_palette = new Dialog_palette(getActivity());
+                dialog_palette.callFunction("etude", "shadows", product_name, product_key, i, shadowAdapter);
+                shadowAdapter.notifyDataSetChanged();
             }
         });
 
@@ -118,11 +119,12 @@ public class MyPaletteFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     lipAdapter.resetItem(); // 중복 방지
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        String key = ds.getKey();
                         StringTokenizer stringTokenizer = new StringTokenizer(ds.getKey(), "\\");
                         final String product_key = stringTokenizer.nextToken();
                         String brand = ds.child("brand").getValue().toString();
-                        final String detail_key = ds.child("colorKey").getValue().toString();
-                        lip_list.add(product_key);
+                        String detail_key = ds.child("colorKey").getValue().toString();
+                        lip_list.add(ds.getKey());
 
                         //제품 정보 가져오기
                         ref.child(brand).child("lips").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -130,7 +132,7 @@ public class MyPaletteFragment extends Fragment {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                     if (ds.getKey().equals(product_key)) {
-                                        String key = ds.getKey();
+
                                         String name = ds.child("name").getValue().toString();    // name
                                         String detail_name = ds.child("colorName").child(detail_key).getValue().toString(); // 상세 제품명
                                         String price = ds.child("price").getValue().toString();   // price
@@ -166,12 +168,13 @@ public class MyPaletteFragment extends Fragment {
                     shadowAdapter.resetItem();
                     //lipAdapter.resetItem(); // 중복 방지
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        String key = ds.getKey();
                         StringTokenizer stringTokenizer = new StringTokenizer(ds.getKey(), "\\");
                         final String product_key = stringTokenizer.nextToken();
-                        detail_key = ds.child("colorKey").getValue().toString();
+                        String detail_key = ds.child("colorKey").getValue().toString();
                         String brand = ds.child("brand").getValue().toString();
                         Log.d("brand: ", brand);
-                        shadow_list.add(product_key);
+                        shadow_list.add(ds.getKey());
 
                         //제품 정보 가져오기
                         ref.child(brand).child("shadows").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -179,7 +182,6 @@ public class MyPaletteFragment extends Fragment {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                     if (ds.getKey().equals(product_key)) {
-                                        String key = ds.getKey();
                                         String name = ds.child("name").getValue().toString();    // name
                                         String detail_name = ds.child("colorName").child(detail_key).getValue().toString(); // 상세 제품명
                                         String price = ds.child("price").getValue().toString();   // price
