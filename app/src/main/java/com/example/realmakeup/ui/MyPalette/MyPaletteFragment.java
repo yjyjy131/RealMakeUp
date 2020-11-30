@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -39,6 +40,8 @@ public class MyPaletteFragment extends Fragment {
     product_Adapter lipAdapter;
     product_Adapter shadowAdapter;
 
+    Button dualmakeup;
+
     List<String> shadow_list = new ArrayList<>();
     List<String> lip_list = new ArrayList<>();
 
@@ -57,6 +60,17 @@ public class MyPaletteFragment extends Fragment {
                 ViewModelProviders.of(this).get(MyPaletteViewModel.class);
         View root = inflater.inflate(R.layout.fragment_my_palette, container, false);
 
+        dualmakeup = (Button)root.findViewById(R.id.go_makeup_btn);
+        dualmakeup.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                String textureInfo = "face1";
+                int textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
+                Intent intent = new Intent(getActivity(), MakeupActivity.class);
+                intent.putExtra("textureid", textureId);
+                startActivity(intent);
+            }
+        });
+
         shadow_grid = (GridView)root.findViewById(R.id.palette_shadow);
         shadowAdapter = new product_Adapter();
         lip_grid = (GridView)root.findViewById(R.id.palette_lip);
@@ -73,6 +87,7 @@ public class MyPaletteFragment extends Fragment {
         lip_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //String textureInfo = "face1";
                 String textureInfo = "lip0n" + detail_key;
                 int textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
                 Intent intent = new Intent(getActivity(), MakeupActivity.class);

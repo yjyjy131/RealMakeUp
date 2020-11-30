@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_palette, R.id.nav_item, R.id.nav_skin, R.id.nav_color)
+                R.id.nav_home, R.id.nav_palette, R.id.nav_item, R.id.nav_skin, R.id.nav_color, R.id.nav_user)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
     /*
-    DB의 화장품 색상 rgb값으로 봄/여름/가을/겨울 톤 구분
+    //DB의 화장품 색상 rgb값으로 봄/여름/가을/겨울 톤 구분
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // 메뉴를 클릭했을 때의 이벤트 처리
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return true; // 내가 이벤트 처리를 완료함
     }
-     */
+    */
 
     @Override
     public boolean onSupportNavigateUp() {
