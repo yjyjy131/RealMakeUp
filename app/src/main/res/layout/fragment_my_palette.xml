@@ -85,15 +85,5 @@
             android:textStyle="bold"
             android:text="선택한 제품 테스트"/>
 
-        <Button
-            android:id="@+id/edit_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/white_btn"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:text="팔레트 수정"/>
     </LinearLayout>
 </LinearLayout>

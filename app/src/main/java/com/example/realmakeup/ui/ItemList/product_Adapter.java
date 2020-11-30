@@ -54,6 +54,9 @@ public class product_Adapter extends BaseAdapter {
     public void resetItem() {
         items = new ArrayList<product_SingleItem>();
     }
+    public void removeItem(int position){
+        items.remove(position);
+    }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
