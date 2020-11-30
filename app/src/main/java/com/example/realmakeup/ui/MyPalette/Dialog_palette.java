@@ -74,19 +74,40 @@ public class Dialog_palette {
             @Override
             public void onClick(View view) {
                 if (item.equals("shadows")) {
-                    String textureInfo = "eye0n0";
-                    int textureId = context.getResources().getIdentifier(textureInfo, "drawable", context.getPackageName());
+                int textureId = 0;
+                try{
+                    String textureInfo = "eye0n" + product_Num;
+                    textureId = context.getResources().getIdentifier(textureInfo, "drawable", context.getPackageName());
+
+                }catch (Exception e){
+                    e.printStackTrace(); //오류 출력
+                }finally {
+                    if(textureId == 0){
+                        textureId = context.getResources().getIdentifier("eye", "drawable", context.getPackageName());
+                    }
                     Intent intent = new Intent(context, MakeupActivity.class);
                     intent.putExtra("textureid", textureId);
                     context.startActivity(intent);
-                } else if (item.equals("lips")) {
-                    String textureInfo = "lip0n0";
-                    int textureId = context.getResources().getIdentifier(textureInfo, "drawable", context.getPackageName());
+                }
+
+            } else if (item.equals("lips")) {
+                int textureId = 0;
+                try{
+                    String textureInfo = "lip0n" + product_Num;
+                    textureId = context.getResources().getIdentifier(textureInfo, "drawable", context.getPackageName());
+
+                }catch (Exception e){
+                    e.printStackTrace(); //오류 출력
+                }finally {
+                    if(textureId == 0){
+                        textureId = context.getResources().getIdentifier("lip", "drawable", context.getPackageName());
+                    }
                     Intent intent = new Intent(context, MakeupActivity.class);
                     intent.putExtra("textureid", textureId);
                     context.startActivity(intent);
                 }
             }
+        }
         });
 
         // 팔레트 삭제 클릭시
