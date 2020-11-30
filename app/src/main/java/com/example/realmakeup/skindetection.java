@@ -146,8 +146,7 @@ public class skindetection extends AppCompatActivity
         Button mainbutton = findViewById(R.id.mainbutton);
         mainbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), com.example.realmakeup.ui.SkinSetting.SkinSettingFragment.class);
-                startActivity(intent);
+                finish();
             }
         });
 
