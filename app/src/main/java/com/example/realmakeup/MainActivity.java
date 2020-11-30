@@ -41,8 +41,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner3;
     String env;
     ArrayAdapter<CharSequence> adapter_env;
+
+    Button userDelBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

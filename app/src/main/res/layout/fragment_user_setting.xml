@@ -9,16 +9,72 @@
     android:gravity="center"
     android:layout_gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/textView"
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.7"
-        android:gravity="center"
-        android:text="사용자 설정"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+        android:layout_height="546dp"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/mark"
+            android:paddingBottom="5dp"
+            />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="25dp"
+            android:textAlignment="center"
+            android:text="Android@gmail.com"
+            android:padding="10dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_centerInParent="true"
+            android:background="@color/common_google_signin_btn_text_dark_disabled"/>
+
+        <Button
+            android:id="@+id/logOutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="로그아웃 "
+            android:textSize="25dp"
+            android:textAlignment="textStart"
+            android:padding="20dp"
+            android:backgroundTint="#00ff0000"
+            style="?android:attr/borderlessButtonStyle"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_centerInParent="true"
+            android:background="@color/common_google_signin_btn_text_dark_disabled"/>
+
+        <Button
+            android:id="@+id/userDelteBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="회원탈퇴 "
+            android:textSize="15dp"
+            android:textColor="#8E8D8D"
+            android:textAlignment="textStart"
+            android:paddingLeft="20dp"
+            android:backgroundTint="#00ff0000"
+            style="?android:attr/borderlessButtonStyle"
+            />
+
+
+    </LinearLayout>
+
 
 
 </LinearLayout>
