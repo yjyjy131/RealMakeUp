@@ -103,22 +103,41 @@ public class HomeFragment extends Fragment {
         lip_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String textureInfo = "lip0n" + detail_key;
-                int textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
-                Intent intent = new Intent(getActivity(), MakeupActivity.class);
-                intent.putExtra("textureid", textureId);
-                startActivity(intent);
+                int textureId = 0;
+                try{
+                    String textureInfo = "lip0n" + i;
+                    textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
+
+                }catch (Exception e){
+                    e.printStackTrace(); //오류 출력
+                }finally {
+                    if(textureId == 0){
+                        textureId = getActivity().getResources().getIdentifier("lip", "drawable", getActivity().getPackageName());
+                    }
+                    Intent intent = new Intent(getActivity(), MakeupActivity.class);
+                    intent.putExtra("textureid", textureId);
+                    startActivity(intent);
+                }
             }
         });
         shadow_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                // String textureInfo = "face1";
-                String textureInfo = "eye0n" + detail_key;
-                int textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
-                Intent intent = new Intent(getActivity(), MakeupActivity.class);
-                intent.putExtra("textureid", textureId);
-                startActivity(intent);
+                int textureId = 0;
+                try{
+                    String textureInfo = "eye0n" + i;
+                    textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
+
+                }catch (Exception e){
+                    e.printStackTrace(); //오류 출력
+                }finally {
+                    if(textureId == 0){
+                        textureId = getActivity().getResources().getIdentifier("eye", "drawable", getActivity().getPackageName());
+                    }
+                    Intent intent = new Intent(getActivity(), MakeupActivity.class);
+                    intent.putExtra("textureid", textureId);
+                    startActivity(intent);
+                }
             }
         });
 
