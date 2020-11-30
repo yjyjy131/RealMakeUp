@@ -57,8 +57,6 @@ class MakeupActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_makeup)
 
-
-
         arFragment = face_fragment as FaceArFragment
         Texture.builder()
                 .setSource(this, textureId)

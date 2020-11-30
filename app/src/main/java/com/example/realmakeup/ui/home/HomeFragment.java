@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
         lip_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String textureInfo = "lip0n" + detail_key;
+                String textureInfo = "face1";
                 int textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
                 Intent intent = new Intent(getActivity(), MakeupActivity.class);
                 intent.putExtra("textureid", textureId);
@@ -113,7 +113,7 @@ public class HomeFragment extends Fragment {
         shadow_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String textureInfo = "eye0n" + detail_key;
+                String textureInfo = "face1";
                 int textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
                 Intent intent = new Intent(getActivity(), MakeupActivity.class);
                 intent.putExtra("textureid", textureId);

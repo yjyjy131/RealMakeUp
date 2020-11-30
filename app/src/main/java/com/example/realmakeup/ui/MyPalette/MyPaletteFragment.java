@@ -59,18 +59,17 @@ public class MyPaletteFragment extends Fragment {
 
         shadow_grid = (GridView)root.findViewById(R.id.palette_shadow);
         shadowAdapter = new product_Adapter();
-
         lip_grid = (GridView)root.findViewById(R.id.palette_lip);
         lipAdapter = new product_Adapter();
 
-        // 나의 palette 제품 키값 받아오기
+        // 나의 palette 제품 키 값 받아오기
         get_palette_eye();
         get_palette_lip();
 
         lip_grid.setAdapter(lipAdapter);
         shadow_grid.setAdapter(shadowAdapter);
 
-        // 제품 클릭시
+        // 제품 클릭 시
         lip_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -81,20 +80,22 @@ public class MyPaletteFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         shadow_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String textureInfo = "eye0n" + detail_key;
                 int textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
                 Intent intent = new Intent(getActivity(), MakeupActivity.class);
+                Log.d("textureid", String.valueOf(textureId));
                 intent.putExtra("textureid", textureId);
                 startActivity(intent);
             }
         });
 
         return root;
-
     }
+
     void get_palette_lip(){
         if (userAuth != null) {
             ref.child("User").child(user_id).child("paletteLips").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -126,7 +127,6 @@ public class MyPaletteFragment extends Fragment {
                                     //singerAdapter.addItem(new MyStudy_SingerItem("test","period","time","zp"));
                                 }
                             }
-
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
                             }
@@ -182,7 +182,6 @@ public class MyPaletteFragment extends Fragment {
                         });
                     }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
