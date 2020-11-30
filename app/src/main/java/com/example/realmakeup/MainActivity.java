@@ -41,6 +41,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     TextView loginInfo;
     TextView skinInfo;
     ImageView skinInfoImg;
+
+    Button userDelBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

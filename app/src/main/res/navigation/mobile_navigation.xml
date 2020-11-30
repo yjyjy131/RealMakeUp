@@ -13,6 +13,7 @@
         <action
             android:id="@+id/action_nav_home_to_nav_skin"
             app:destination="@id/nav_skin" />
+
     </fragment>
 
     <fragment
@@ -39,10 +40,13 @@
         android:label="사용자 설정"
         tools:layout="@layout/fragment_user_setting" />
 
+
     <fragment
         android:id="@+id/nav_color"
         android:name="com.example.realmakeup.ui.PersonalColor.PersonalColorFragment"
         android:label="퍼스널 칼라 진단"
         tools:layout="@layout/fragment_personal_color" />
+
+
 
 </navigation>
