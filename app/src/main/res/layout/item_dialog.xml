@@ -79,7 +79,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2"
             android:gravity="center"
-            android:background="@drawable/camera" />
+            android:background="@drawable/ic_menu_camera" />
             android:textSize="16dp" />
 
         <View
