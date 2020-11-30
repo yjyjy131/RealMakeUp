@@ -62,7 +62,7 @@ public class MyPaletteFragment extends Fragment {
         dualmakeup = (Button)root.findViewById(R.id.go_makeup_btn);
         dualmakeup.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                String textureInfo = "face2";
+                String textureInfo = "lip";
                 int textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
                 Intent intent = new Intent(getActivity(), MakeupActivity.class);
                 intent.putExtra("textureid", textureId);

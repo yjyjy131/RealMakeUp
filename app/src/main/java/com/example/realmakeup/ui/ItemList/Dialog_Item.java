@@ -117,17 +117,38 @@ public class Dialog_Item {
 
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User");
                 if (item.equals("shadows")) {
-                    String textureInfo = "eye" +  product_Num + "n" + num;
-                    int textureId = context.getResources().getIdentifier(textureInfo, "drawable", context.getPackageName());
-                    Intent intent = new Intent(context, MakeupActivity.class);
-                    intent.putExtra("textureid", textureId);
-                    context.startActivity(intent);
+                    int textureId = 0;
+                    try{
+                        String textureInfo = "eye0n" + num;
+                        textureId = context.getResources().getIdentifier(textureInfo, "drawable", context.getPackageName());
+
+                    }catch (Exception e){
+                        e.printStackTrace(); //오류 출력
+                    }finally {
+                        if(textureId == 0){
+                            textureId = context.getResources().getIdentifier("eye", "drawable", context.getPackageName());
+                        }
+                        Intent intent = new Intent(context, MakeupActivity.class);
+                        intent.putExtra("textureid", textureId);
+                        context.startActivity(intent);
+                    }
+
                 } else if (item.equals("lips")) {
-                    String textureInfo = "lip" +  product_Num + "n" + num;
-                    int textureId = context.getResources().getIdentifier(textureInfo, "drawable", context.getPackageName());
-                    Intent intent = new Intent(context, MakeupActivity.class);
-                    intent.putExtra("textureid", textureId);
-                    context.startActivity(intent);
+                    int textureId = 0;
+                    try{
+                        String textureInfo = "lip0n" + num;
+                        textureId = context.getResources().getIdentifier(textureInfo, "drawable", context.getPackageName());
+
+                    }catch (Exception e){
+                        e.printStackTrace(); //오류 출력
+                    }finally {
+                        if(textureId == 0){
+                            textureId = context.getResources().getIdentifier("lip", "drawable", context.getPackageName());
+                        }
+                        Intent intent = new Intent(context, MakeupActivity.class);
+                        intent.putExtra("textureid", textureId);
+                        context.startActivity(intent);
+                    }
                 }
             }
         });
