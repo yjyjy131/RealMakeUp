@@ -19,6 +19,7 @@ import com.example.realmakeup.MakeupActivity;
 import com.example.realmakeup.R;
 import com.example.realmakeup.ui.ItemList.PaletteModel;
 import com.example.realmakeup.ui.ItemList.product_Adapter;
+import com.example.realmakeup.ui.home.home_Adapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -45,7 +46,7 @@ public class Dialog_palette {
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
-    public void callFunction(final String brand, final String item, final String product_name, final String product_key, final int product_Num, final product_Adapter pd) {
+    public void callFunction(final String brand, final String item, final String product_name, final String product_key, final int product_Num, final home_Adapter pd) {
 
         // 커스텀 다이얼로그를 정의하기위해 Dialog클래스를 생성한다.
         final Dialog dlg = new Dialog(context);
