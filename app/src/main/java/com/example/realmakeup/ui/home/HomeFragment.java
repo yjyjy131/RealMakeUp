@@ -55,8 +55,8 @@ public class HomeFragment extends Fragment {
 
     GridView shadow_grid;
     GridView lip_grid;
-    product_Adapter lipAdapter;
-    product_Adapter shadowAdapter;
+    home_Adapter lipAdapter;
+    home_Adapter shadowAdapter;
     List<String> shadow_list = new ArrayList<>();
     List<String> lip_list = new ArrayList<>();
 
@@ -88,10 +88,10 @@ public class HomeFragment extends Fragment {
         });
 
         shadow_grid = (GridView)root.findViewById(R.id.home_shadow);
-        shadowAdapter = new product_Adapter();
+        shadowAdapter = new home_Adapter();
 
         lip_grid = (GridView)root.findViewById(R.id.home_lip);
-        lipAdapter = new product_Adapter();
+        lipAdapter = new home_Adapter();
 
         // 나의 palette 제품 키값 받아오기
         get_user_code();
@@ -188,8 +188,10 @@ public class HomeFragment extends Fragment {
                                     String detail_name = ds.child("colorName").child(detail_key).getValue().toString(); // 상세 제품명
                                     String price = ds.child("price").getValue().toString();   // price
                                     String Img = ds.child("titleImg").getValue().toString();   // titleImg
-                                    //String Img = ds.child("image").child(detail_key).getValue().toString();   // detailImg
-                                    lipAdapter.addItem(new product_SingleItem(name +"\n"+ detail_name, price, Img, key));
+                                    String Img2 = ds.child("image").child(detail_key).getValue().toString();   // detailImg
+                                    //lipAdapter.addItem(new product_SingleItem(name +"\n"+ detail_name, price, Img, key));
+                                    lipAdapter.addItem(new home_SingleItem(name +"\n"+ detail_name, price, Img, Img2, key));
+
                                     lipAdapter.notifyDataSetChanged();
                                 }
                                 //singerAdapter.addItem(new MyStudy_SingerItem("test","period","time","zp"));
@@ -230,8 +232,8 @@ public class HomeFragment extends Fragment {
                                     String detail_name = ds.child("colorName").child(detail_key).getValue().toString(); // 상세 제품명
                                     String price = ds.child("price").getValue().toString();   // price
                                     String Img = ds.child("titleImg").getValue().toString();   // titleImg
-                                    //String Img = ds.child("image").child(detail_key).getValue().toString();   // detailImg
-                                    shadowAdapter.addItem(new product_SingleItem(name +"\n"+ detail_name, price, Img, key));
+                                    String Img2 = ds.child("image").child(detail_key).getValue().toString();   // detailImg
+                                    shadowAdapter.addItem(new home_SingleItem(name +"\n"+ detail_name, price, Img,Img2, key));
                                     shadowAdapter.notifyDataSetChanged();
                                 }
                                 //singerAdapter.addItem(new MyStudy_SingerItem("test","period","time","zp"));

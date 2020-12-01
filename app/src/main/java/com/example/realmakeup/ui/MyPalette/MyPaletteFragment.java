@@ -20,6 +20,8 @@ import com.example.realmakeup.R;
 import com.example.realmakeup.ui.ItemList.Dialog_Item;
 import com.example.realmakeup.ui.ItemList.product_Adapter;
 import com.example.realmakeup.ui.ItemList.product_SingleItem;
+import com.example.realmakeup.ui.home.home_Adapter;
+import com.example.realmakeup.ui.home.home_SingleItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,8 +39,8 @@ public class MyPaletteFragment extends Fragment {
     private MyPaletteViewModel myPaletteViewModel;
     GridView shadow_grid;
     GridView lip_grid;
-    product_Adapter lipAdapter;
-    product_Adapter shadowAdapter;
+    home_Adapter lipAdapter;
+    home_Adapter shadowAdapter;
 
     Button dualmakeup;
 
@@ -62,7 +64,7 @@ public class MyPaletteFragment extends Fragment {
         dualmakeup = (Button)root.findViewById(R.id.go_makeup_btn);
         dualmakeup.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                String textureInfo = "lip";
+                String textureInfo = "face";
                 int textureId = getActivity().getResources().getIdentifier(textureInfo, "drawable", getActivity().getPackageName());
                 Intent intent = new Intent(getActivity(), MakeupActivity.class);
                 intent.putExtra("textureid", textureId);
@@ -71,9 +73,9 @@ public class MyPaletteFragment extends Fragment {
         });
 
         shadow_grid = (GridView)root.findViewById(R.id.palette_shadow);
-        shadowAdapter = new product_Adapter();
+        shadowAdapter = new home_Adapter();
         lip_grid = (GridView)root.findViewById(R.id.palette_lip);
-        lipAdapter = new product_Adapter();
+        lipAdapter = new home_Adapter();
 
         // 나의 palette 제품 키 값 받아오기
         get_palette_eye();
@@ -86,7 +88,7 @@ public class MyPaletteFragment extends Fragment {
         lip_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                product_SingleItem singleItem = lipAdapter.getItem(i);
+                home_SingleItem singleItem = lipAdapter.getItem(i);
                 String product_key = singleItem.getProductKey();
                 String product_name = singleItem.getName();
 
@@ -99,7 +101,7 @@ public class MyPaletteFragment extends Fragment {
         shadow_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                product_SingleItem singleItem = shadowAdapter.getItem(i);
+                home_SingleItem singleItem = shadowAdapter.getItem(i);
                 String product_key = singleItem.getProductKey();
                 String product_name = singleItem.getName();
 
@@ -137,8 +139,9 @@ public class MyPaletteFragment extends Fragment {
                                         String detail_name = ds.child("colorName").child(detail_key).getValue().toString(); // 상세 제품명
                                         String price = ds.child("price").getValue().toString();   // price
                                         String Img = ds.child("titleImg").getValue().toString();   // titleImg
-                                        //String Img = ds.child("image").child(detail_key).getValue().toString();   // detailImg
-                                        lipAdapter.addItem(new product_SingleItem(name +"\n"+ detail_name, price, Img, key));
+                                        String Img2 = ds.child("image").child(detail_key).getValue().toString();   // detailImg
+                                        //lipAdapter.addItem(new product_SingleItem(name +"\n"+ detail_name, price, Img, key));
+                                        lipAdapter.addItem(new home_SingleItem(name +"\n"+ detail_name, price, Img, Img2, key));
                                         lipAdapter.notifyDataSetChanged();
                                     }
                                     //singerAdapter.addItem(new MyStudy_SingerItem("test","period","time","zp"));
@@ -185,8 +188,9 @@ public class MyPaletteFragment extends Fragment {
                                         String name = ds.child("name").getValue().toString();    // name
                                         String detail_name = ds.child("colorName").child(detail_key).getValue().toString(); // 상세 제품명
                                         String price = ds.child("price").getValue().toString();   // price
-                                        String titleImg = ds.child("titleImg").getValue().toString();   // titleImg
-                                        shadowAdapter.addItem(new product_SingleItem(name +"\n"+ detail_name, price, titleImg, key));
+                                        String Img = ds.child("titleImg").getValue().toString();   // titleImg
+                                        String Img2 = ds.child("image").child(detail_key).getValue().toString();   // detailImg
+                                        shadowAdapter.addItem(new home_SingleItem(name +"\n"+ detail_name, price, Img,Img2, key));
                                         shadowAdapter.notifyDataSetChanged();
                                     }
                                     //singerAdapter.addItem(new MyStudy_SingerItem("test","period","time","zp"));
